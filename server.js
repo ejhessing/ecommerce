@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', index)
 app.get('/register', index)
+app.post('/register', index)
 //
 // app.post("/checkout", index)
 
