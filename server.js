@@ -1,15 +1,19 @@
-var bodyParser = require('body-parser')
-var express = require('express')
-var path = require('path')
+const bodyParser = require('body-parser')
+const express = require('express')
+const express = require('express-handlebars')
+const path = require('path')
 
 
-var index = require('./routes/index')
+const index = require('./routes/index')
 
-var PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 
-var app = express()
+const app = express()
 
 app.use('/index', index)
+app.engine('hbs', hbs())
+app.set('view engine', 'hbs')
+app.set('views', __dirname + "/views")
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -20,5 +24,5 @@ app.get('/', index)
 
 
 app.listen(PORT, function () {
-  console.log('Listening on port', PORT)
+  console.log('Listening on port: ', PORT)
 })
