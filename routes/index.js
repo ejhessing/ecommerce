@@ -11,7 +11,7 @@ router.get('/', function (req,res) {
 })
 
 
-router.post("/checkout", function (req, res) {
+router.post("/register", function (req, res) {
   const name = req.body.name
   const address = req.body.address
   const city = req.body.city
@@ -28,4 +28,8 @@ router.post("/checkout", function (req, res) {
 
 router.get("/thanks", function(req, res) {
   res.send("Thank you for signing up!")
+})
+
+router.get("/register", function(req, res) {
+  res.render(__dirname + '/../views/register.hbs')
 })
