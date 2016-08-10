@@ -4,6 +4,11 @@ exports.up = function(knex, Promise) {
     table.increments('id').primary()
     table.string('email')
     table.string('password')
+    table.string('name')
+    table.string('address')
+    table.string('city')
+    table.string('country')
+    table.string('postcode')
   })
 };
 
