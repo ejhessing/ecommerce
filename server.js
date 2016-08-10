@@ -19,9 +19,9 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', index)
-app.get('/thanks', index)
-
-app.post("/registerUser", index)
+// app.get('/thanks', index)
+//
+// app.post("/checkout", index)
 
 
 
