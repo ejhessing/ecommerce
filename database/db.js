@@ -3,7 +3,8 @@ var config = require('../knexfile.js')[ process.env.NODE_ENV || 'development' ]
 var knex = require('knex')(config)
 
 module.exports = {
-  createUser: createUser
+  createUser: createUser,
+  getCart: getCart
 }
 
 function createUser (email, password, name, address, city, country, postcode) {
@@ -14,4 +15,11 @@ function createUser (email, password, name, address, city, country, postcode) {
     })
 
 
+}
+
+
+function getCart () {
+  return knex('cart')
+    .join('products', 'product_id', '=', 'products.id')
+    .select()
 }

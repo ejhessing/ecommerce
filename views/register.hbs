@@ -49,15 +49,12 @@
                 </tr>
               </thead>
               <tbody>
+                {{#each data}}
                 <tr>
-                  <td>Green T-shirt</td>
-                  <td>26</td>
-
+                  <td>{{name}}</td>
+                  <td>{{price}}</td>
                 </tr>
-                <tr>
-                  <td>Blue T-shirt</td>
-                  <td>42</td>
-                </tr>
+                {{/each}}
                 <tr>
                   <td><strong>Total</strong></td>
                   <td><strong>66</strong></td>

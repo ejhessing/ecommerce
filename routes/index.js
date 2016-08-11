@@ -23,7 +23,6 @@ router.post("/register", function (req, res) {
     .then(function (){
       res.redirect("/thanks")
     })
-
 })
 
 router.get("/thanks", function(req, res) {
@@ -31,5 +30,7 @@ router.get("/thanks", function(req, res) {
 })
 
 router.get("/register", function(req, res) {
-  res.render(__dirname + '/../views/register.hbs')
+  let data = db.getCart()
+  console.log(data)
+  res.render(__dirname + '/../views/register.hbs', {data: data})
 })
