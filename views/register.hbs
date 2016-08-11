@@ -4,32 +4,67 @@
     <title>Ecommerce Project</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 
   </head>
   <body>
     <div class="container">
+      <!-- Register -->
+      <div class="row">
+      <div class="one-half column">
+        <h2>Register</h2>
+        <section class="registration">
+          <form class="" action="registerUser" method="post">
+            <label for="email">email: </label>
+            <input type="text" name="email">
+            <label for="password">Password: </label>
+            <input type="text" name="password">
+            <label for="name">Name: </label>
+            <input type="text" name="name">
+            <label for="address">Address: </label>
+            <input type="text" name="address">
+            <label for="city">City: </label>
+            <input type="text" name="city">
+            <label for="country">Country: </label>
+            <input type="text" name="country">
+            <label for="postcode">Postcode: </label>
+            <input type="text" name="postcode">
 
-      <h1>Register</h1>
-      <section class="registration">
-        <form class="" action="register" method="post">
-          <label for="email">email: </label>
-          <input type="text" name="email">
-          <label for="password">Password: </label>
-          <input type="text" name="password">
-          <label for="name">Name: </label>
-          <input type="text" name="name">
-          <label for="address">Address: </label>
-          <input type="text" name="address">
-          <label for="city">City: </label>
-          <input type="text" name="city">
-          <label for="country">Country: </label>
-          <input type="text" name="country">
-          <label for="postcode">Postcode: </label>
-          <input type="text" name="postcode">
+            <br>
+            <button type="submit" name="submit">Register and Pay</button>
+          </form>
+        </div>
 
-          <br>
-          <button type="submit" name="submit">Register and Pay</button>
-        </form>
-    </div>
+
+      <!-- Cart -->
+        <div class="one-half column">
+          <h2>Cart</h2>
+          <section class="">
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Green T-shirt</td>
+                  <td>26</td>
+
+                </tr>
+                <tr>
+                  <td>Blue T-shirt</td>
+                  <td>42</td>
+                </tr>
+                <tr>
+                  <td><strong>Total</strong></td>
+                  <td><strong>66</strong></td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
   </body>
 </html>
