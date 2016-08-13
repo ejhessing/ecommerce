@@ -13,8 +13,6 @@ function createUser (email, password, name, address, city, country, postcode) {
     .catch(function (err) {
       console.log(err)
     })
-
-
 }
 
 
@@ -22,4 +20,19 @@ function getCart () {
   return knex('cart')
     .join('products', 'product_id', '=', 'products.id')
     .select()
+    .then(function (data) {
+      data.total = getTotal(data)
+      return data
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+}
+
+function getTotal (data) {
+  let total = 0
+  for(var i = 0; i < data.length; i++) {
+    total += data[i].price
+  }
+  return total
 }

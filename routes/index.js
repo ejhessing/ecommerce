@@ -30,7 +30,8 @@ router.get("/thanks", function(req, res) {
 })
 
 router.get("/register", function(req, res) {
-  let data = db.getCart()
-  console.log(data)
-  res.render(__dirname + '/../views/register.hbs', {data: data})
+  db.getCart()
+  .then(function (data){
+    res.render(__dirname + '/../views/register.hbs', {data: data})
+  })
 })

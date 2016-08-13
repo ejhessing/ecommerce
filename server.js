@@ -18,10 +18,12 @@ app.use('/index', index)
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/', index)
-app.get('/thanks', index)
-app.get('/register', index)
-app.post('/register', index)
+app.use("/", index)
+
+// app.get('/', index)
+// app.get('/thanks', index)
+// app.get('/register', index)
+// app.post('/register', index)
 //
 // app.post("/checkout", index)
 
