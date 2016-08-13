@@ -13,7 +13,7 @@ function init(data) {
   paypal.configure(data.api)
 }
 
-function create (req, res) {
+function create (req, res, total) {
   var payment = {
     "intent": "sale",
     "payer": {
@@ -25,8 +25,8 @@ function create (req, res) {
     },
     "transactions": [{
       "amount": {
-        "total": "5.00",
-        "currency": "USD"
+        "total": total,
+        "currency": "NZD"
       },
       "description": "My awesome payment"
     }]

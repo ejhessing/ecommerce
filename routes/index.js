@@ -29,7 +29,7 @@ router.post("/register", function (req, res) {
   const password = req.body.password
   db.createUser(email, password, name, address, city, country, postcode)
     .then(function (){
-      res.redirect("/thanks")
+      res.redirect("/create")
     })
 })
 
@@ -50,7 +50,10 @@ function init(data) {
 }
 
 router.get("/create",function(req, res) {
-  paypal.create(req, res)
+  db.getCart()
+    .then(function(data){
+        paypal.create(req, res, data.total)
+    })
 })
 router.get("/execute",function(req, res) {
   paypal.execute(req, res)
