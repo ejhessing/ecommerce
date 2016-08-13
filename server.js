@@ -1,9 +1,13 @@
 const bodyParser = require('body-parser')
 const express = require('express')
 const hbs = require('express-handlebars')
+const session = require('express-session')
 const path = require('path')
+const fs = require('fs')
+
 
 const index = require('./routes/index')
+const paypal = require("./routes/paypal")
 
 const PORT = process.env.PORT || 3000
 
@@ -18,15 +22,28 @@ app.use('/index', index)
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }))
 
+app.set('trust proxy', 1)
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure:true }
+}))
+
+
 app.use("/", index)
 
-// app.get('/', index)
-// app.get('/thanks', index)
-// app.get('/register', index)
-// app.post('/register', index)
-//
-// app.post("/checkout", index)
 
+//paypal
+try {
+  var configJSON = fs.readFileSync(__dirname + "/config.json");
+  var config = JSON.parse(configJSON.toString());
+  //let config = JSON.parse(configJSON.toString());
+} catch (err) {
+  console.log("File config.json not found or is invalid " + err.message);
+  process.exit(1)
+}
+paypal.init(config)
 
 
 app.listen(PORT, function () {

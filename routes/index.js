@@ -1,9 +1,17 @@
 
 const express = require('express')
+
 const router = express.Router()
 const db = require("../database/db")
+const paypal = require("./paypal")
+
+let config = {}
+
+
 
 module.exports = router
+
+
 
 router.get('/', function (req,res) {
   res.render(__dirname + '/../views/checkout.hbs')
@@ -34,4 +42,20 @@ router.get("/register", function(req, res) {
   .then(function (data){
     res.render(__dirname + '/../views/register.hbs', {data: data})
   })
+})
+
+function init(data) {
+  config = data
+  paypal.configure(data.api)
+}
+
+router.get("/create",function(req, res) {
+  paypal.create(req, res)
+})
+router.get("/execute",function(req, res) {
+  paypal.execute(req, res)
+})
+
+router.get("/cancel", function(req, res){
+  res.send("The payment got canceled")
 })
