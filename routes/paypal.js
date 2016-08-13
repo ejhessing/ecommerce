@@ -37,7 +37,6 @@ function create (req, res, total) {
       console.log(error)
     } else {
       if(payment.payer.payment_method === 'paypal') {
-        console.log(req.session.paymentId + " " + payment.id)
         req.session.paymentId = payment.id;
         var redirectUrl
         for(var i=0; i < payment.links.length; i++) {
