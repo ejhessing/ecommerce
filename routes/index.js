@@ -1,23 +1,17 @@
-
 const express = require('express')
-
 const router = express.Router()
 const db = require("../database/db")
 const paypal = require("./paypal")
 
-let config = {}
-
-
 
 module.exports = router
 
-
-
 router.get('/', function (req,res) {
-  res.render(__dirname + '/../views/checkout.hbs')
-  //res.send(db.createUser('ejhessing@gmail.com', 'abc123', 'Erwin', '7 Rathgar Rd', 'Auckland', 'NZ', '0610'))
+  db.getProducts()
+    .then(function(data) {
+      res.render(__dirname + '/../views/index.hbs', {data: data})
+    })
 })
-
 
 router.post("/register", function (req, res) {
   const name = req.body.name
@@ -33,8 +27,11 @@ router.post("/register", function (req, res) {
     })
 })
 
-router.get("/thanks", function(req, res) {
-  res.send("Thank you for signing up!")
+router.get("/cart", function(req, res) {
+  db.getCart()
+  .then(function (data){
+    res.render(__dirname + '/../views/cart.hbs', {data: data})
+  })
 })
 
 router.get("/register", function(req, res) {
@@ -44,8 +41,12 @@ router.get("/register", function(req, res) {
   })
 })
 
+
+
+
+// Paypal
 function init(data) {
-  config = data
+  let config = data
   paypal.configure(data.api)
 }
 
@@ -55,10 +56,15 @@ router.get("/create",function(req, res) {
         paypal.create(req, res, data.total)
     })
 })
+
 router.get("/execute",function(req, res) {
   paypal.execute(req, res)
 })
 
 router.get("/cancel", function(req, res){
   res.send("The payment got canceled")
+})
+
+router.get("/thanks", function(req, res) {
+  res.send("Thank you for signing up!")
 })

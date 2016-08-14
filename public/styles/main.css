@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+span {
+  font-weight: bold;
+  color: red;
+
+}
+
+/* Product display */
+
+#display {
+  margin: 0;
+  padding: 0;
+  list-style:none
+}
+
+#display li {
+  float: left;
+  width: 45%;
+  margin: 2.5%;
+
+}
+
+#display li a p {
+  margin: 0;
+  padding: 5%;
+  font-size: 0.75em;
+}
+
+img {
+  width: 100%;
+  max-width: 200px;
+  max-height: 200px;
+}
+
+
+
+
+
+@media screen and (min-width: 680px) {
+  #display li {
+    width: 29%;
+    margin: 2%;
+  }
+}

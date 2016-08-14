@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ecommerce Project</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+    <link rel="stylesheet" href="styles/main.css">
+
+  </head>
+  <body>
+    <div class="container">
+      <ul id="display">
+        {{#each data}}
+          <li>
+            <img src="{{image}}" alt="{{name}}">
+            <p>{{name}} <span>{{price}}</span></p>
+          </li>
+        {{/each}}
+      </ul>
+      </div>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+  
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="one-half column offset-by-three">
+        <h2>Cart</h2>
+        <section class="">
+          <table class="u-full-width">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each data}}
+              <tr>
+                <td>{{name}}</td>
+                <td>{{price}}</td>
+              </tr>
+              {{/each}}
+              <tr>
+                <td><strong>Total</strong></td>
+                <td><strong>{{data.total}}</strong></td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </body>
+</html>

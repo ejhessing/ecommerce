@@ -4,7 +4,8 @@ var knex = require('knex')(config)
 
 module.exports = {
   createUser: createUser,
-  getCart: getCart
+  getCart: getCart,
+  getProducts: getProducts
 }
 
 function createUser (email, password, name, address, city, country, postcode) {
@@ -35,4 +36,11 @@ function getTotal (data) {
     total += data[i].price
   }
   return total
+}
+
+function getProducts () {
+  return knex('products')
+    .catch(function (err) {
+      console.log(err)
+    })
 }
