@@ -19,6 +19,12 @@
         <h2>{{data.name}}</h2>
         <h4>{{data.price}}</h4>
         <p>Description</p>
+        <form action="/add" method="post">
+          <!-- Hidden fields to pass data -->
+          <input type="hidden" name="id" value="{{data.id}}">
+          <input type="text" class="u-half-width" name="quantity">
+          <input class="u-full-width button-primary" type="submit" name="submit" value="Add to cart">
+        </form>
         <a href="/add"><button name="cart">Cart</button></a>
       </div>
     </div>

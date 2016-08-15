@@ -6,6 +6,7 @@ module.exports = {
   createUser: createUser,
   getCart: getCart,
   getProduct: getProduct,
+  addToCart: addToCart,
   getProducts: getProducts
 }
 
@@ -49,6 +50,24 @@ function getProducts () {
 function getProduct (id) {
   return knex('products')
     .where('id', id)
+    .catch(function (err) {
+      console.log(err)
+    })
+}
+
+function addToCart(input) {
+  return knex('cart')
+    .join('products', 'product_id', '=', 'products.id')
+    .where('products.id', input.id)
+    .then(function (data) {
+      let userId = data[0].user_id || null
+      let quantity = input.quantity || 1
+      return knex('cart')
+        .insert({product_id: data[0].product_id, user_id: userId, quantity: quantity})
+        .catch(function (err) {
+          console.log(err)
+        })
+    })
     .catch(function (err) {
       console.log(err)
     })

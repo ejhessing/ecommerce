@@ -43,8 +43,18 @@ router.get("/products/:id", function(req, res){
 })
 
 // Add
-router.get("/add", function(req, res){
-  //add to cart goes back to main page
+router.post("/add", function(req, res){
+  let data = {
+    id: req.body.id,
+    quantity: req.body.quantity
+  }
+  console.log(data)
+  db.addToCart(data)
+    //  .then(function(data){
+    //    console.log(data)
+    // //   res.render("/cart", {data: data})
+    // })
+  //add to cart
 })
 
 // Remove
@@ -54,11 +64,6 @@ router.get("/remove", function(req, res){
 
 
 
-// Buy now
-router.get("/buyNow", function(req, res){
-  //adds to cart then goes to cart page
-  //goes to checkout with what ever is in cart and t
-})
 
 router.get("/register", function(req, res) {
   db.getCart()
