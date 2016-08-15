@@ -47,6 +47,13 @@ router.get("/add", function(req, res){
   //add to cart goes back to main page
 })
 
+// Remove
+router.get("/remove", function(req, res){
+  //Remove from cart
+})
+
+
+
 // Buy now
 router.get("/buyNow", function(req, res){
   //adds to cart then goes to cart page

@@ -4,34 +4,45 @@
     <title>Cart</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
-  
+
 
   </head>
   <body>
     <div class="container">
-      <div class="one-half column offset-by-three">
+      <div class="eight column ">
         <h2>Cart</h2>
         <section class="">
           <table class="u-full-width">
             <thead>
               <tr>
                 <th>Name</th>
+                <th>Quantity</th>
                 <th>Price</th>
+                <th>Total</th>
               </tr>
             </thead>
             <tbody>
               {{#each data}}
               <tr>
-                <td>{{name}}</td>
+                <td>
+                  {{name}}<br>
+                  <a href="/remove">REMOVE</a>
+                </td>
+                <td>{{quantity}}</td>
                 <td>{{price}}</td>
+                <td>total</td>
               </tr>
               {{/each}}
               <tr>
                 <td><strong>Total</strong></td>
+                <td></td>
+                <td></td>
                 <td><strong>{{data.total}}</strong></td>
               </tr>
             </tbody>
           </table>
+          <a href="/" ><button name="checkout">Continue Shopping</button></a>
+          <a href="/register" ><button name="checkout">Proceed to Checkout</button></a>
       </div>
     </div>
   </body>
