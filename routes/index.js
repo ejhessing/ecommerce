@@ -34,6 +34,25 @@ router.get("/cart", function(req, res) {
   })
 })
 
+router.get("/products/:id", function(req, res){
+  let id = req.params.id
+  db.getProduct(id)
+    .then(function(data) {
+      res.render(__dirname + '/../views/products.hbs', {data: data[0]})
+    })
+})
+
+// Add
+router.get("/add", function(req, res){
+  //add to cart goes back to main page
+})
+
+// Buy now
+router.get("/buyNow", function(req, res){
+  //adds to cart then goes to cart page
+  //goes to checkout with what ever is in cart and t
+})
+
 router.get("/register", function(req, res) {
   db.getCart()
   .then(function (data){

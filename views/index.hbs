@@ -12,8 +12,8 @@
       <ul id="display">
         {{#each data}}
           <li>
-            <img src="{{image}}" alt="{{name}}">
-            <p>{{name}} <span>{{price}}</span></p>
+            <a href="products/{{id}}"><img src="{{image}}" alt="{{name}}"></a>
+            <p>{{name}} - <span>{{price}}</span></p>
           </li>
         {{/each}}
       </ul>

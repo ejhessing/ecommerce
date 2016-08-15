@@ -10,7 +10,18 @@
   </head>
   <body>
     <div class="container">
+      <div class="row">
+      <div class="one-half column">
+        <img src ="{{data.image}}" alt="{{data.name}}">
 
       </div>
+      <div class="one-half column">
+        <h2>{{data.name}}</h2>
+        <h4>{{data.price}}</h4>
+        <p>Description</p>
+        <button name="cart" value="/add">Cart</button>
+        <button name="buyNow" value="/buyNow">Buy Now</button>
+      </div>
+    </div>
   </body>
 </html>
