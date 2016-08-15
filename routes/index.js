@@ -48,17 +48,25 @@ router.post("/add", function(req, res){
     id: req.body.id,
     quantity: req.body.quantity
   }
-  console.log(data)
   db.addToCart(data)
-    //  .then(function(data){
-    //    console.log(data)
-    // //   res.render("/cart", {data: data})
-    // })
-  //add to cart
+    .then(function(data){
+       res.redirect("/cart")
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
 })
 
 // Remove
-router.get("/remove", function(req, res){
+router.post("/remove", function(req, res){
+  let id = req.body.id
+  db.removeFromCart(id)
+    .then(function(data){
+       res.redirect("/cart")
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
   //Remove from cart
 })
 

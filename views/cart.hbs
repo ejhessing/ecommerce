@@ -26,7 +26,11 @@
               <tr>
                 <td>
                   {{name}}<br>
-                  <a href="/remove">REMOVE</a>
+                  <form action="/remove" method="post">
+                    <!-- Hidden fields to pass data -->
+                    <input type="hidden" name="id" value="{{id}}">
+                    <input class="button" type="submit" value="Remove">
+                  </form>
                 </td>
                 <td>{{quantity}}</td>
                 <td>{{price}}</td>
