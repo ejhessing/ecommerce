@@ -8,6 +8,8 @@ module.exports = {
   getProduct: getProduct,
   addToCart: addToCart,
   removeFromCart: removeFromCart,
+  updateCart: updateCart,
+  checkIfInCart: checkIfInCart,
   getProducts: getProducts
 }
 
@@ -57,13 +59,15 @@ function getProduct (id) {
 }
 
 function addToCart(input) {
+//if item added is the same as the item already in cart increase cart by one
   let userId = input.userId || null
   let quantity = input.quantity || 1
   return knex('cart')
-    .insert({product_id: input.id, user_id: userId, quantity: quantity})
-    .catch(function (err) {
-      console.log(err)
-    })
+  .insert({product_id: input.id, user_id: userId, quantity: quantity})
+  .catch(function (err) {
+    console.log(err)
+  })
+
 }
 
 function removeFromCart (id) {
@@ -73,4 +77,31 @@ function removeFromCart (id) {
     .catch(function (err) {
       console.log(err)
     })
+}
+
+function checkIfInCart (data) {
+  return knex('cart')
+    .where('product_id', data.id)
+    .count('product_id')
+    .then(function(count){
+      if(count[0].count == 1){
+        updateCart(data)
+      } else {
+        addToCart(data)
+      }
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+}
+
+function updateCart (data) {
+  return knex('cart')
+    .where('product_id', data.id)
+    .increment('quantity', data.quantity)
+    .catch(function(err){
+      console.log(err)
+    })
+
+
 }

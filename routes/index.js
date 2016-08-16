@@ -48,13 +48,28 @@ router.post("/add", function(req, res){
     id: req.body.id,
     quantity: req.body.quantity
   }
-  db.addToCart(data)
+  db.checkIfInCart(data)
     .then(function(data){
        res.redirect("/cart")
     })
     .catch(function (err) {
       console.log(err)
     })
+  // db.updateCart(data)
+  //   .then(function(data){
+  //      res.redirect("/cart")
+  //   })
+  //   .catch(function (err) {
+  //     console.log(err)
+  //   })
+  //
+  // db.addToCart(data)
+  //   .then(function(data){
+  //      res.redirect("/cart")
+  //   })
+  //   .catch(function (err) {
+  //     console.log(err)
+  //   })
 })
 
 // Remove
