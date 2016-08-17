@@ -40,27 +40,33 @@
       <!-- Cart -->
         <div class="one-half column">
           <h2>Cart</h2>
-          <section class="">
             <table class="u-full-width">
               <thead>
                 <tr>
                   <th>Name</th>
+                  <th>Quantity</th>
                   <th>Price</th>
+                  <th>Total</th>
                 </tr>
               </thead>
               <tbody>
                 {{#each data}}
                 <tr>
                   <td>{{name}}</td>
+                  <td>{{quantity}}</td>
                   <td>{{price}}</td>
+                  <td>{{total}}</td>
                 </tr>
                 {{/each}}
                 <tr>
                   <td><strong>Total</strong></td>
+                  <td></td>
+                  <td></td>
                   <td><strong>{{data.total}}</strong></td>
                 </tr>
               </tbody>
             </table>
+            <a href="/cart" ><button class="u-full-width" name="cart">Back to cart</button></a>
         </div>
       </div>
   </body>
