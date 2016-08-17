@@ -59,7 +59,7 @@ function getProduct (id) {
 }
 
 function addToCart(input) {
-//if item added is the same as the item already in cart increase cart by one
+
   let userId = input.userId || null
   let quantity = input.quantity || 1
   return knex('cart')
@@ -85,9 +85,9 @@ function checkIfInCart (data) {
     .count('product_id')
     .then(function(count){
       if(count[0].count == 1){
-        updateCart(data)
+        return updateCart(data)
       } else {
-        addToCart(data)
+        return addToCart(data)
       }
     })
     .catch(function(err){
@@ -102,6 +102,4 @@ function updateCart (data) {
     .catch(function(err){
       console.log(err)
     })
-
-
 }
