@@ -22,26 +22,6 @@ function createUser (email, password, name, address, city, country, postcode) {
 }
 
 
-function getCart () {
-  return knex('cart')
-    .join('products', 'product_id', '=', 'products.id')
-    .select()
-    .then(function (data) {
-      data.total = getTotal(data)
-      return data
-    })
-    .catch(function (err) {
-      console.log(err)
-    })
-}
-
-function getTotal (data) {
-  let total = 0
-  for(var i = 0; i < data.length; i++) {
-    total += data[i].price
-  }
-  return total
-}
 
 function getProducts () {
   return knex('products')
@@ -58,25 +38,35 @@ function getProduct (id) {
     })
 }
 
-function addToCart(input) {
 
-  let userId = input.userId || null
-  let quantity = input.quantity || 1
+// Cart Logic
+function getCart () {
   return knex('cart')
-  .insert({product_id: input.id, user_id: userId, quantity: quantity})
-  .catch(function (err) {
-    console.log(err)
-  })
-
-}
-
-function removeFromCart (id) {
-  return knex('cart')
-    .where('product_id', id)
-    .del()
+    .join('products', 'product_id', '=', 'products.id')
+    .select()
+    .then(function (data) {
+      let data2 = (data).map(getTotal)
+      data2.total = getCartTotal(data)
+      return data2
+    })
     .catch(function (err) {
       console.log(err)
     })
+}
+
+//Get product total
+function getTotal (data) {
+  data.total = data.quantity * data.price
+  return data
+}
+
+//Gets the total of the cart
+function getCartTotal (data) {
+  let total = 0
+  for(var i = 0; i < data.length; i++) {
+    total += data[i].total
+  }
+  return total
 }
 
 function checkIfInCart (data) {
@@ -95,11 +85,30 @@ function checkIfInCart (data) {
     })
 }
 
+function addToCart(input) {
+  let userId = input.userId || null
+  let quantity = input.quantity || 1
+  return knex('cart')
+  .insert({product_id: input.id, user_id: userId, quantity: quantity})
+  .catch(function (err) {
+    console.log(err)
+  })
+}
+
 function updateCart (data) {
   return knex('cart')
     .where('product_id', data.id)
     .increment('quantity', data.quantity)
     .catch(function(err){
+      console.log(err)
+    })
+}
+
+function removeFromCart (id) {
+  return knex('cart')
+    .where('product_id', id)
+    .del()
+    .catch(function (err) {
       console.log(err)
     })
 }
