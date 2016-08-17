@@ -13,7 +13,7 @@ router.get('/', function (req,res) {
     })
 })
 
-router.post("/register", function (req, res) {
+router.post("/checkout", function (req, res) {
   const name = req.body.name
   const address = req.body.address
   const city = req.body.city
@@ -88,10 +88,10 @@ router.post("/remove", function(req, res){
 
 
 
-router.get("/register", function(req, res) {
+router.get("/checkout", function(req, res) {
   db.getCart()
   .then(function (data){
-    res.render(__dirname + '/../views/register.hbs', {data: data})
+    res.render(__dirname + '/../views/checkout.hbs', {data: data})
   })
 })
 
