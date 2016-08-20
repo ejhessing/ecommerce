@@ -1,10 +1,10 @@
 const paypal = require('paypal-rest-sdk')
+let payID = ''
 
 module.exports = {
   init:init,
   create: create,
   execute:execute
-
 }
 
 
@@ -20,7 +20,7 @@ function create (req, res, total) {
       "payment_method": "paypal"
     },
     "redirect_urls": {
-      "return_url": "/thanks",
+      "return_url": "http://localhost:3000/execute",
       "cancel_url": "/cancel"
     },
     "transactions": [{
@@ -37,7 +37,7 @@ function create (req, res, total) {
       console.log(error)
     } else {
       if(payment.payer.payment_method === 'paypal') {
-        req.session.paymentId = payment.id;
+        payID = payment.id;
         var redirectUrl
         for(var i=0; i < payment.links.length; i++) {
           var link = payment.links[i]
@@ -52,7 +52,7 @@ function create (req, res, total) {
 }
 
 function execute (req, res){
-  var paymentId = req.session.paymentId
+  var paymentId = payID
   var payerId = req.param('PayerID')
 
   var details = { "payer_id": payerId };
@@ -60,6 +60,7 @@ function execute (req, res){
     if (error) {
       console.log(error)
     } else {
+      console.log(payment)
       res.send("Hell yeah!")
     }
   })
