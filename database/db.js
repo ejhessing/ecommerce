@@ -10,6 +10,7 @@ module.exports = {
   removeFromCart: removeFromCart,
   updateCart: updateCart,
   checkIfInCart: checkIfInCart,
+  afterPurchase: afterPurchase,
   getProducts: getProducts
 }
 
@@ -111,4 +112,8 @@ function removeFromCart (id) {
     .catch(function (err) {
       console.log(err)
     })
+}
+
+function afterPurchase () {
+
 }

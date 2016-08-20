@@ -3,7 +3,6 @@ const router = express.Router()
 const db = require("../database/db")
 const paypal = require("./paypal")
 
-
 module.exports = router
 
 router.get('/', function (req,res) {
@@ -42,7 +41,7 @@ router.get("/products/:id", function(req, res){
     })
 })
 
-// Add
+// Add to cart
 router.post("/add", function(req, res){
   let data = {
     id: req.body.id,
@@ -55,24 +54,9 @@ router.post("/add", function(req, res){
     .catch(function (err) {
       console.log(err)
     })
-  // db.updateCart(data)
-  //   .then(function(data){
-  //      res.redirect("/cart")
-  //   })
-  //   .catch(function (err) {
-  //     console.log(err)
-  //   })
-  //
-  // db.addToCart(data)
-  //   .then(function(data){
-  //      res.redirect("/cart")
-  //   })
-  //   .catch(function (err) {
-  //     console.log(err)
-  //   })
 })
 
-// Remove
+  //Remove from cart
 router.post("/remove", function(req, res){
   let id = req.body.id
   db.removeFromCart(id)
@@ -82,11 +66,8 @@ router.post("/remove", function(req, res){
     .catch(function (err) {
       console.log(err)
     })
-  //Remove from cart
+
 })
-
-
-
 
 router.get("/checkout", function(req, res) {
   db.getCart()
@@ -95,14 +76,14 @@ router.get("/checkout", function(req, res) {
   })
 })
 
+router.get("/thanks", function(req, res) {
+  db.afterPurchase()
+  .then(function (data){
+    console.log(data.transactions[0].amount)
+    res.render(__dirname + '/../views/thanks.hbs', {data: data})
+  })
+})
 
-
-
-// Paypal
-function init(data) {
-  let config = data
-  paypal.configure(data.api)
-}
 
 router.get("/create",function(req, res) {
   db.getCart()
