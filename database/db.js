@@ -7,6 +7,7 @@ module.exports = {
   getCart: getCart,
   getProduct: getProduct,
   addToCart: addToCart,
+  getHistory: getHistory,
   removeFromCart: removeFromCart,
   updateCart: updateCart,
   checkIfInCart: checkIfInCart,
@@ -19,11 +20,17 @@ function createUser (email, password, name, address, city, country, postcode) {
     .insert ({email: email, password: password, name: name, address: address, city: city, country: country, postcode: postcode})
     .returning('id')
     .then(function(id){
-        getCart().then(function(data){
-          for(var i =0; i< data.length; i++){
-            addToHistory(id, data, i)
-          }
-          return id
+      return knex('cart')
+        .select()
+        .update({user_id: parseInt(id,10)}) //add user_id to cart
+        .then(function(){
+          getCart()
+            .then(function(data){
+              for(var i = 0; i< data.length; i++){
+                addToHistory(data[i])
+              }
+              return id
+            })
         })
     })
     .catch(function (err) {
@@ -123,9 +130,25 @@ function removeFromCart (id) {
     })
 }
 
-function addToHistory (id, data, i) {
+function getHistory () {
   return knex('history')
-    .insert({user_id: parseInt(id,10), product_id: data[i].product_id, quantity: data[i].quantity })
+    .join('products', 'product_id', '=', 'products.id')
+    .select()
+    .then(function (data) {
+      let data2 = (data).map(getTotal)
+      data2.total = getCartTotal(data)
+      return data2
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+}
+
+
+
+function addToHistory (data) {
+  return knex('history')
+    .insert({user_id: data.user_id, product_id: data.product_id, quantity: data.quantity })
     .returning('id')
     .then(function(data){
       return data
