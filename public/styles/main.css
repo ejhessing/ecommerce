@@ -2,8 +2,7 @@
   box-sizing: border-box;
 }
 
-body {
-  text-transform: uppercase;
+header {
   text-align: center;
 }
 
@@ -11,6 +10,18 @@ span {
   font-weight: bold;
   color: red;
 
+}
+h2 {
+  text-align: justify;
+}
+
+/*Products Page*/
+.productImg {
+  width:100%;
+  max-width: 360px;
+  max-height: 360px;
+  height:auto;
+  text-align: center;
 }
 
 /* Product display */
@@ -40,6 +51,33 @@ img {
   width: 100%;
   max-width: 200px;
   max-height: 200px;
+}
+
+
+/*Cart Page*/
+form {
+  margin: 0;
+}
+
+form .removeBtn {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+td {
+  text-align: justify;;
+}
+
+th {
+  text-align: justify;;
+}
+
+.cartBtn {
+  text-align: right;
+}
+
+/*Checkout Page*/
+label {
+  text-align: left;
 }
 
 

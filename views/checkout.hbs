@@ -4,19 +4,26 @@
     <title>Ecommerce Project</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="styles/main.css">
 
   </head>
   <body>
+    <header>
+      <h1>E-commerce Project</h1>
+      <a href="/"><button>Home</button></a>
+      <a href="/about"><button>About</button></a>
+      <a href="/cart"><button>Cart</button></a>
+      <a href="/login"><button>Login</button></a>
+      <hr>
+    </header>
     <div class="container">
       <!-- Register -->
       <div class="row">
       <div class="one-half column">
         <h2>Register</h2>
         <section class="registration">
-          <form class="" action="checkout" method="post">
-            <label for="email">email: </label>
+          <form class="checkoutForm" action="checkout" method="post">
+            <label for="email">E-mail: </label>
             <input type="text" class="u-full-width" name="email">
             <label for="password">Password: </label>
             <input type="text" class="u-full-width" name="password">
