@@ -10,7 +10,7 @@ module.exports = {
   removeFromCart: removeFromCart,
   updateCart: updateCart,
   checkIfInCart: checkIfInCart,
-  afterPurchase: afterPurchase,
+  removeAllFromCart: removeAllFromCart,
   getProducts: getProducts
 }
 
@@ -21,17 +21,10 @@ function createUser (email, password, name, address, city, country, postcode) {
     .then(function(id){
         getCart().then(function(data){
           for(var i =0; i< data.length; i++){
-            knex('history')
-              .insert({user_id: parseInt(id,10), product_id: data[i].product_id, quantity: data[i].quantity })
-              .returning('id')
-              .then(function(data){
-                return data
-              })
+            addToHistory(id, data, i)
           }
           return id
         })
-
-
     })
     .catch(function (err) {
       console.log(err)
@@ -130,6 +123,20 @@ function removeFromCart (id) {
     })
 }
 
-function afterPurchase () {
+function addToHistory (id, data, i) {
+  return knex('history')
+    .insert({user_id: parseInt(id,10), product_id: data[i].product_id, quantity: data[i].quantity })
+    .returning('id')
+    .then(function(data){
+      return data
+    })
+}
 
+function removeAllFromCart () {
+  return knex('cart')
+    .select()
+    .del()
+    .catch(function (err) {
+      console.log(err)
+    })
 }

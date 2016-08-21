@@ -1,4 +1,5 @@
 const paypal = require('paypal-rest-sdk')
+const db = require("../database/db")
 let payID = ''
 
 module.exports = {
@@ -60,9 +61,7 @@ function execute (req, res){
     if (error) {
       console.log(error)
     } else {
-      console.log("**********************")
-      console.log(payment.transactions[0].amount)
-      console.log(payment)
+      db.removeAllFromCart()
       res.render(__dirname + '/../views/thanks.hbs', {data: payment})
     }
   })

@@ -61,15 +61,15 @@
                 <tr>
                   <td>{{name}}</td>
                   <td>{{quantity}}</td>
-                  <td>{{price}}</td>
-                  <td>{{total}}</td>
+                  <td>${{price}}.00</td>
+                  <td>${{total}}.00</td>
                 </tr>
                 {{/each}}
                 <tr>
                   <td><strong>Total</strong></td>
                   <td></td>
                   <td></td>
-                  <td><strong>{{data.total}}</strong></td>
+                  <td><strong>${{data.total}}.00</strong></td>
                 </tr>
               </tbody>
             </table>
