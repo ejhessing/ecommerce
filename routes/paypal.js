@@ -61,8 +61,11 @@ function execute (req, res){
     if (error) {
       console.log(error)
     } else {
-      db.removeAllFromCart()
-      res.render(__dirname + '/../views/thanks.hbs', {data: payment})
+      db.getCart()
+        .then(function(data){
+          db.removeAllFromCart()
+          res.render(__dirname + '/../views/thanks.hbs', {payment: payment, data:data})
+        })
     }
   })
 }
