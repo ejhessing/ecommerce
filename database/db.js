@@ -17,6 +17,22 @@ module.exports = {
 function createUser (email, password, name, address, city, country, postcode) {
   return knex('users')
     .insert ({email: email, password: password, name: name, address: address, city: city, country: country, postcode: postcode})
+    .returning('id')
+    .then(function(id){
+        getCart().then(function(data){
+          for(var i =0; i< data.length; i++){
+            knex('history')
+              .insert({user_id: parseInt(id,10), product_id: data[i].product_id, quantity: data[i].quantity })
+              .returning('id')
+              .then(function(data){
+                return data
+              })
+          }
+          return id
+        })
+
+
+    })
     .catch(function (err) {
       console.log(err)
     })
