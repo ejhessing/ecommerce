@@ -9,12 +9,14 @@ header {
 
 span {
   font-weight: bold;
-  color: red;
+  color: steelblue;
 
 }
 h2 {
   text-align: justify;
 }
+
+
 
 /*Products Page*/
 .productImg {
@@ -54,7 +56,13 @@ img {
   max-height: 200px;
 }
 
+.quantityTxt {
+  display: inline-block;
+}
 
+.quantityInput {
+  max-width: 50px;
+}
 /*Cart Page*/
 form {
   margin: 0;
@@ -63,6 +71,7 @@ form {
 form .removeBtn {
   margin-bottom: 5px;
   margin-top: 5px;
+  color:red;
 }
 td {
   text-align: justify;;
@@ -81,7 +90,9 @@ label {
   text-align: left;
 }
 
-
+.checkoutBtn {
+  color:green;
+}
 
 
 

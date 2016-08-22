@@ -25,12 +25,13 @@
       </div>
       <div class="one-half column">
         <h2>{{data.name}}</h2>
-        <h4>{{data.price}}</h4>
+        <h4><span>$ {{data.price}}.00<span></h4>
         <p>{{data.description}}</p>
         <form action="/add" method="post">
           <!-- Hidden fields to pass data -->
           <input type="hidden" name="id" value="{{data.id}}">
-          <input type="text" class="u-half-width" name="quantity">
+          <label for="quantity" class="quantityTxt">Quantity: </label>
+          <input type="text" class="u-half-width quantityInput" name="quantity" placeholder="1">
           <input class="u-full-width button-primary" type="submit" name="submit" value="Add to cart">
         </form>
       </div>
