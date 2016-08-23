@@ -97,3 +97,8 @@ router.get("/execute",function(req, res) {
 router.get("/cancel", function(req, res){
   res.send("The payment got canceled")
 })
+
+
+router.get("/login", function(req, res) {
+  res.render(__dirname + '/../views/login.hbs')
+})
