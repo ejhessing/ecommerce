@@ -1,10 +1,6 @@
-cart
-quantity
-
-Get Paypal working
-
 Authentication
-Login
-Purchase History
+  Login
+  Purchase History for user
+  Update details for User
 
-HBS Header and footer
+Make them APIs and rebuild front end for React - Redux

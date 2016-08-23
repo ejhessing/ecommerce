@@ -42,7 +42,7 @@ router.get("/products/:id", function(req, res){
 })
 
 // Add to cart
-router.post("/add", function(req, res){
+router.post("/add", function(req, res) {
   let data = {
     id: req.body.id,
     quantity: req.body.quantity
@@ -57,7 +57,7 @@ router.post("/add", function(req, res){
 })
 
   //Remove from cart
-router.post("/remove", function(req, res){
+router.post("/remove", function(req, res) {
   let id = req.body.id
   db.removeFromCart(id)
     .then(function(data){
@@ -66,7 +66,6 @@ router.post("/remove", function(req, res){
     .catch(function (err) {
       console.log(err)
     })
-
 })
 
 router.get("/checkout", function(req, res) {
@@ -79,7 +78,6 @@ router.get("/checkout", function(req, res) {
 router.get("/thanks", function(req, res) {
   db.afterPurchase()
   .then(function (data){
-    console.log(data.transactions[0].amount)
     res.render(__dirname + '/../views/thanks.hbs', {data: data})
   })
 })
@@ -98,8 +96,4 @@ router.get("/execute",function(req, res) {
 
 router.get("/cancel", function(req, res){
   res.send("The payment got canceled")
-})
-
-router.get("/thanks", function(req, res) {
-  res.send("Thank you for signing up!")
 })
