@@ -3,16 +3,18 @@ var config = require('../knexfile.js')[ process.env.NODE_ENV || 'development' ]
 var knex = require('knex')(config)
 
 module.exports = {
+  addToCart: addToCart,
+  checkIfInCart: checkIfInCart,
   createUser: createUser,
   getCart: getCart,
-  getProduct: getProduct,
-  addToCart: addToCart,
+  findByLogin: findByLogin,
   getHistory: getHistory,
-  removeFromCart: removeFromCart,
-  updateCart: updateCart,
-  checkIfInCart: checkIfInCart,
+  getProduct: getProduct,
+  getProducts: getProducts,
   removeAllFromCart: removeAllFromCart,
-  getProducts: getProducts
+  removeFromCart: removeFromCart,
+  getUserById: getUserById,
+  updateCart: updateCart
 }
 
 function createUser (email, password, name, address, city, country, postcode) {
@@ -153,12 +155,55 @@ function addToHistory (data) {
     .then(function(data){
       return data
     })
+    .catch(function (err) {
+      console.log(err)
+    })
 }
 
 function removeAllFromCart () {
   return knex('cart')
     .select()
     .del()
+    .catch(function (err) {
+      console.log(err)
+    })
+}
+
+function findByLogin (email) {
+  return knex('users')
+    .select()
+    .where('email', email)
+    .catch(function (err) {
+      console.log(err)
+    })
+}
+
+function getUserById (id) {
+  return knex('users')
+    .join('history', 'users.id', "=", "user_id")
+    .where('users.id', id)
+    .select()
+    .then(function(data){
+      return knex('history')
+        .join('products', 'product_id', '=', 'products.id')
+        .where('products.id', data[0].product_id)
+        .where('user_id', data[0].user_id)
+        .then(function (data) {
+            let data2 = (data).map(getTotal)
+            data2.total = getCartTotal(data)
+            return data2
+        })
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+
+}
+
+function findByLogin (email) {
+  return knex('users')
+    .where('users.email', email)
+    .select()
     .catch(function (err) {
       console.log(err)
     })

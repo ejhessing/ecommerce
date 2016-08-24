@@ -101,3 +101,55 @@ router.post("/remove", function(req, res) {
       console.log(err)
     })
 })
+<<<<<<< HEAD
+=======
+
+router.get("/checkout", function(req, res) {
+  db.getCart()
+  .then(function (data){
+    res.render(__dirname + '/../views/checkout.hbs', {data: data})
+  })
+})
+
+router.get("/thanks", function(req, res) {
+  db.afterPurchase()
+  .then(function (data){
+    res.render(__dirname + '/../views/thanks.hbs', {data: data})
+  })
+})
+
+
+router.get("/create",function(req, res) {
+  db.getCart()
+    .then(function(data){
+        paypal.create(req, res, data.total)
+    })
+})
+
+router.get("/execute",function(req, res) {
+  paypal.execute(req, res)
+})
+
+router.get("/cancel", function(req, res){
+  res.send("The payment got canceled")
+})
+
+
+router.get("/login", function(req, res) {
+  res.render(__dirname + '/../views/login.hbs')
+})
+
+
+
+router.get ("/profile", function(req, res) {
+  let id = req.session.passport.user
+  db.getUserById(id)
+    .then(function(user) {
+      res.render(__dirname + '/../views/profile.hbs', {data: user})
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+
+})
+>>>>>>> auth
