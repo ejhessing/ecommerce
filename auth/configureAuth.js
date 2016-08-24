@@ -7,10 +7,8 @@ module.exports = {
 
 
 function loginStrategy (username, password, done) {
-  console.log("helloooooo" + username + " " + password)
   db.findByLogin(username)
     .then(function (users) {
-      console.log(users)
       if (!users || !users[0]) {
         console.log('Incorrect username.')
         done(null, false, { message: 'Incorrect username.' })

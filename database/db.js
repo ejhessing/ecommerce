@@ -179,7 +179,6 @@ function findByLogin (email) {
 }
 
 function getUserById (id) {
-  console.log("reached getUserById")
   return knex('users')
     .join('history', 'users.id', "=", "user_id")
     .where('users.id', id)
@@ -190,11 +189,9 @@ function getUserById (id) {
         .where('products.id', data[0].product_id)
         .where('user_id', data[0].user_id)
         .then(function (data) {
-          let data2 = (data).map(getTotal)
-          data2.total = getCartTotal(data)
-          console.log(data2)
-          return data2
-
+            let data2 = (data).map(getTotal)
+            data2.total = getCartTotal(data)
+            return data2
         })
     })
     .catch(function (err) {
