@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+    <link rel="stylesheet" href="../styles/main.css">
+
+  </head>
+  <body>
+    <header>
+        <h1>E-commerce Project</h1>
+        <a href="/"><button>Home</button></a>
+        <a href="/about"><button>About</button></a>
+        <a href="/cart"><button>Cart</button></a>
+        <a href="/login"><button>Login</button></a>
+        <hr>
+    </header>
+    <div class="container">
+      <div class="eight column ">
+        <h2>data.name</h2>
+
+          <h2>What you purchased:</h2>
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each data}}
+                <tr>
+                  <td>{{name}}</td>
+                  <td>{{quantity}}</td>
+                  <td>${{price}}.00</td>
+                  <td>${{total}}.00</td>
+                </tr>
+                {{/each}}
+                <tr>
+                  <td><strong>Total</strong></td>
+                  <td></td>
+                  <td></td>
+                  <td><strong>${{data.total}}.00</strong></td>
+                </tr>
+              </tbody>
+            </table>
+
+      </div>
+    </div>
+  </body>
+</html>

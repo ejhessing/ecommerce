@@ -7,8 +7,10 @@ module.exports = {
 
 
 function loginStrategy (username, password, done) {
+  console.log("helloooooo" + username + " " + password)
   db.findByLogin(username)
     .then(function (users) {
+      console.log(users)
       if (!users || !users[0]) {
         console.log('Incorrect username.')
         done(null, false, { message: 'Incorrect username.' })
@@ -24,7 +26,6 @@ function loginStrategy (username, password, done) {
 }
 
 function registerStrategy (req, username, password, done) {
-  console.log('entered registration strategy', username, password)
   function findOrCreateUser () {
     db.findByLogin(username)
       .then(function (users) {
@@ -32,13 +33,13 @@ function registerStrategy (req, username, password, done) {
         done(null, false,
            console.log('User Already Exists'))
         } else {
-          var name = req.body.name
-          var phone = req.body.phone
-          var location = req.body.location
-          var rego = req.body.rego
-          db.createUser(username, password, name, phone, location, rego)
+          const name = req.body.name
+          const address = req.body.address
+          const city = req.body.city
+          const country = req.body.country
+          const postcode = req.body.postcode
+          db.createUser(email, password, name, address, city, country, postcode)
             .then(function (users) {
-              console.log(users)
               done(null, users[0])
             })
             .catch(function (err) {
@@ -48,7 +49,7 @@ function registerStrategy (req, username, password, done) {
         }
       })
       .catch(function (err) {
-        console.log('Error in SignUp: '+err)
+        console.log('Error in SignUp: ' +err)
         done(err)
       })
   }

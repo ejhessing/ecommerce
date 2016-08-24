@@ -102,3 +102,17 @@ router.get("/cancel", function(req, res){
 router.get("/login", function(req, res) {
   res.render(__dirname + '/../views/login.hbs')
 })
+
+
+
+router.get ("/profile", function(req, res) {
+  let id = req.session.passport.user
+  db.getUserById(id)
+    .then(function(user) {
+      res.render(__dirname + '/../views/profile.hbs', {data: user})
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+
+})

@@ -3,16 +3,16 @@ var config = require('../knexfile.js')[ process.env.NODE_ENV || 'development' ]
 var knex = require('knex')(config)
 
 module.exports = {
+  addToCart: addToCart,
+  checkIfInCart: checkIfInCart,
   createUser: createUser,
   getCart: getCart,
-  getProduct: getProduct,
-  addToCart: addToCart,
   getHistory: getHistory,
-  removeFromCart: removeFromCart,
-  updateCart: updateCart,
-  checkIfInCart: checkIfInCart,
+  getProduct: getProduct,
+  getProducts: getProducts,
   removeAllFromCart: removeAllFromCart,
-  getProducts: getProducts
+  removeFromCart: removeFromCart,
+  updateCart: updateCart
 }
 
 function createUser (email, password, name, address, city, country, postcode) {
@@ -162,4 +162,17 @@ function removeAllFromCart () {
     .catch(function (err) {
       console.log(err)
     })
+}
+
+function findByLogin (email) {
+  return knex('users')
+    .select()
+    .where('email', email)
+}
+
+function getUserById (id) {
+  return knex('users')
+    .join('history', 'users.id', "=", "user_id")
+    .where('user.id', id)
+    .select()
 }
