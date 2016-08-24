@@ -7,11 +7,13 @@ module.exports = {
   checkIfInCart: checkIfInCart,
   createUser: createUser,
   getCart: getCart,
+  findByLogin: findByLogin,
   getHistory: getHistory,
   getProduct: getProduct,
   getProducts: getProducts,
   removeAllFromCart: removeAllFromCart,
   removeFromCart: removeFromCart,
+  getUserById: getUserById,
   updateCart: updateCart
 }
 
@@ -153,6 +155,9 @@ function addToHistory (data) {
     .then(function(data){
       return data
     })
+    .catch(function (err) {
+      console.log(err)
+    })
 }
 
 function removeAllFromCart () {
@@ -168,11 +173,41 @@ function findByLogin (email) {
   return knex('users')
     .select()
     .where('email', email)
+    .catch(function (err) {
+      console.log(err)
+    })
 }
 
 function getUserById (id) {
+  console.log("reached getUserById")
   return knex('users')
     .join('history', 'users.id', "=", "user_id")
-    .where('user.id', id)
+    .where('users.id', id)
     .select()
+    .then(function(data){
+      return knex('history')
+        .join('products', 'product_id', '=', 'products.id')
+        .where('products.id', data[0].product_id)
+        .where('user_id', data[0].user_id)
+        .then(function (data) {
+          let data2 = (data).map(getTotal)
+          data2.total = getCartTotal(data)
+          console.log(data2)
+          return data2
+
+        })
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+
+}
+
+function findByLogin (email) {
+  return knex('users')
+    .where('users.email', email)
+    .select()
+    .catch(function (err) {
+      console.log(err)
+    })
 }
