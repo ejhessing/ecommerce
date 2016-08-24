@@ -1,7 +1,7 @@
-const express = require('express')
-const router = express.Router()
 const db = require("../database/db")
+const express = require('express')
 const paypal = require("./paypal")
+const router = express.Router()
 
 module.exports = router
 
@@ -9,6 +9,15 @@ router.get('/', function (req,res) {
   db.getProducts()
     .then(function(data) {
       res.render(__dirname + '/../views/index.hbs', {data: data})
+    })
+})
+
+//Product Page
+router.get("/products/:id", function(req, res){
+  let id = req.params.id
+  db.getProduct(id)
+    .then(function(data) {
+      res.render(__dirname + '/../views/products.hbs', {data: data[0]})
     })
 })
 
@@ -26,47 +35,6 @@ router.post("/checkout", function (req, res) {
     })
 })
 
-router.get("/cart", function(req, res) {
-  db.getCart()
-  .then(function (data){
-    res.render(__dirname + '/../views/cart.hbs', {data: data})
-  })
-})
-
-router.get("/products/:id", function(req, res){
-  let id = req.params.id
-  db.getProduct(id)
-    .then(function(data) {
-      res.render(__dirname + '/../views/products.hbs', {data: data[0]})
-    })
-})
-
-// Add to cart
-router.post("/add", function(req, res) {
-  let data = {
-    id: req.body.id,
-    quantity: req.body.quantity
-  }
-  db.checkIfInCart(data)
-    .then(function(data){
-       res.redirect("/cart")
-    })
-    .catch(function (err) {
-      console.log(err)
-    })
-})
-
-  //Remove from cart
-router.post("/remove", function(req, res) {
-  let id = req.body.id
-  db.removeFromCart(id)
-    .then(function(data){
-       res.redirect("/cart")
-    })
-    .catch(function (err) {
-      console.log(err)
-    })
-})
 
 router.get("/checkout", function(req, res) {
   db.getCart()
@@ -96,4 +64,40 @@ router.get("/execute",function(req, res) {
 
 router.get("/cancel", function(req, res){
   res.send("The payment got canceled")
+})
+
+
+router.get("/cart", function(req, res) {
+  db.getCart()
+  .then(function (data){
+    res.render(__dirname + '/../views/cart.hbs', {data: data})
+  })
+})
+
+
+// Add to cart
+router.post("/add", function(req, res) {
+  let data = {
+    id: req.body.id,
+    quantity: req.body.quantity
+  }
+  db.checkIfInCart(data)
+    .then(function(data){
+       res.redirect("/cart")
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
+})
+
+  //Remove from cart
+router.post("/remove", function(req, res) {
+  let id = req.body.id
+  db.removeFromCart(id)
+    .then(function(data){
+       res.redirect("/cart")
+    })
+    .catch(function (err) {
+      console.log(err)
+    })
 })
