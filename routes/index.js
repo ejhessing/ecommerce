@@ -101,8 +101,7 @@ router.post("/remove", function(req, res) {
       console.log(err)
     })
 })
-<<<<<<< HEAD
-=======
+
 
 router.get("/checkout", function(req, res) {
   db.getCart()
@@ -152,4 +151,7 @@ router.get ("/profile", function(req, res) {
     })
 
 })
->>>>>>> auth
+
+router.get("/about", function(req, res) {
+    res.render(__dirname + '/../views/about.hbs')
+})
