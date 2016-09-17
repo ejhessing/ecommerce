@@ -6,7 +6,7 @@ module.exports = {
     client: 'postgresql',
     connection: {
       host: 'localhost',
-      port: '32770',
+      port: '32768',
       database: 'ecommerce',
       user:     'Erwin',
       password: 'project'
