@@ -126,7 +126,10 @@ router.get("/create",function(req, res) {
 })
 
 router.get("/execute",function(req, res) {
-  paypal.execute(req, res)
+  paypal.execute()
+    .then(results => {
+      res.render(__dirname + '/../views/thanks.hbs', results)
+    })
 })
 
 router.get("/cancel", function(req, res){

@@ -1,6 +1,8 @@
 require('dotenv').config();
 var config = require('../knexfile.js')[ process.env.NODE_ENV || 'development' ]
 var knex = require('knex')(config)
+4
+
 
 module.exports = {
   addToCart: addToCart,
@@ -19,7 +21,7 @@ module.exports = {
 
 function createUser (email, password, name, address, city, country, postcode) {
   return knex('users')
-    .insert ({email: email, password: password, name: name, address: address, city: city, country: country, postcode: postcode})
+    .insert ({email: email, password: hash(password), name: name, address: address, city: city, country: country, postcode: postcode})
     .returning('id')
     .then(function(id){
       return knex('cart')
