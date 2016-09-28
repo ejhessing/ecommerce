@@ -1,3 +1,4 @@
+"use strict"
 const paypal = require('paypal-rest-sdk')
 const db = require("../database/db")
 let payID = ''
@@ -10,7 +11,7 @@ module.exports = {
 
 
 function init(data) {
-  config = data
+  let config = data
   paypal.configure(data.api)
 }
 

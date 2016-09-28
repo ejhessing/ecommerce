@@ -1,3 +1,4 @@
+"use strict"
 const db = require("../database/db")
 const express = require('express')
 const paypal = require("./paypal")

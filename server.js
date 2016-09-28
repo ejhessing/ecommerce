@@ -30,9 +30,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.set('trust proxy', 1)
 app.use(session({
   secret: 'SESSION_KEY'
-  // resave: false,
-  // saveUninitialized: true,
-  // cookie: { secure:true }
 }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -67,7 +64,6 @@ app.use("/", index)
 try {
   var configJSON = fs.readFileSync(__dirname + "/config.json");
   var config = JSON.parse(configJSON.toString());
-  //let config = JSON.parse(configJSON.toString());
 } catch (err) {
   console.log("File config.json not found or is invalid " + err.message);
   process.exit(1)

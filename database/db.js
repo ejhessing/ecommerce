@@ -1,3 +1,4 @@
+"use strict"
 require('dotenv').config();
 var config = require('../knexfile.js')[ process.env.NODE_ENV || 'development' ]
 var knex = require('knex')(config)
