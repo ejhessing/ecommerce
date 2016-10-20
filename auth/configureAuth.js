@@ -1,4 +1,5 @@
-var db = require('../database/db')
+const db = require('../database/db')
+const bcrypt   = require('bcrypt-nodejs');
 
 module.exports = {
   loginStrategy: loginStrategy,
@@ -6,25 +7,25 @@ module.exports = {
 }
 
 
-function loginStrategy (username, password, done) {
+function loginStrategy (req, username, password, done) {
   db.findByLogin(username)
     .then(function (users) {
       if (!users || !users[0]) {
         console.log('Incorrect username.')
-        done(null, false, { message: 'Incorrect username.' })
-      } else if (users[0].password !== password) {
-        done(null, false, { message: 'Incorrect password.' })
+        return done(null, false, { message: 'Incorrect username.' })
+      } else if (!validPassword(password, users[0].password)) {
+        return done(null, false, { message: 'Incorrect password.' })
       } else {
-        done(null, users[0])
+        return done(null, users[0])
       }
     })
     .catch(function (err) {
-      done(err)
+      return done(err)
     })
 }
 
 function registerStrategy (req, username, password, done) {
-  function findOrCreateUser () {
+  process.nextTick(() => {
     db.findByLogin(username)
       .then(function (users) {
         if (users && users[0]) {
@@ -36,9 +37,10 @@ function registerStrategy (req, username, password, done) {
           const city = req.body.city
           const country = req.body.country
           const postcode = req.body.postcode
-          db.createUser(email, password, name, address, city, country, postcode)
+          const hash = generateHash(password)
+          db.createUser(username, hash, name, address, city, country, postcode)
             .then(function (users) {
-              done(null, users[0])
+              done(null, {id : users})
             })
             .catch(function (err) {
               console.log('Error creating the user')
@@ -50,8 +52,15 @@ function registerStrategy (req, username, password, done) {
         console.log('Error in SignUp: ' +err)
         done(err)
       })
-  }
-  // Delay the execution of findOrCreateUser and execute
-  // the method in the next tick of the event loop
-  process.nextTick(findOrCreateUser)
+  })
 }
+
+
+function generateHash(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+};
+
+
+function validPassword(password, hash) {
+    return bcrypt.compareSync(password, hash);
+};
