@@ -2,21 +2,10 @@
 
 module.exports = {
 
-  development: {
-    client: 'postgresql',
+development: {
+    client: 'sqlite3',
     connection: {
-      host: 'localhost',
-      port: '',
-      database: 'ecommerce',
-      user:     'postgres',
-      password: 'project'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: 'knex_migrations'
+      filename: './dev.sqlite3'
     }
   },
 

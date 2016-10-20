@@ -2,7 +2,7 @@
 require('dotenv').config();
 var config = require('../knexfile.js')[ process.env.NODE_ENV || 'development' ]
 var knex = require('knex')(config)
-4
+
 
 
 module.exports = {
@@ -17,26 +17,19 @@ module.exports = {
   removeAllFromCart: removeAllFromCart,
   removeFromCart: removeFromCart,
   getUserById: getUserById,
-  updateCart: updateCart
+  updateCart: updateCart,
+  getUsers: getUsers,
+  moveCartToHistory, moveCartToHistory
 }
 
 function createUser (email, password, name, address, city, country, postcode) {
   return knex('users')
-    .insert ({email: email, password: hash(password), name: name, address: address, city: city, country: country, postcode: postcode})
+    .insert ({email: email, password: password, name: name, address: address, city: city, country: country, postcode: postcode})
     .returning('id')
     .then(function(id){
       return knex('cart')
-        .select()
-        .update({user_id: parseInt(id,10)}) //add user_id to cart
-        .then(function(){
-          getCart()
-            .then(function(data){
-              for(var i = 0; i< data.length; i++){
-                addToHistory(data[i])
-              }
-              return id
-            })
-        })
+        .update({user_id: parseInt(id,10)})
+        .returning('id')
     })
     .catch(function (err) {
       console.log(err)
@@ -211,3 +204,19 @@ function findByLogin (email) {
       console.log(err)
     })
 }
+
+function moveCartToHistory () {
+  getCart() //a promise was not returned
+    .then(function(data){
+      console.log(data)
+      for(var i = 0; i< data.length; i++){
+        addToHistory(data[i])
+      }
+      return
+    })
+}
+
+function getUsers () {
+   return knex('users')
+}
+

@@ -52,7 +52,7 @@ router.get("/thanks", function(req, res) {
 })
 
 
-router.get("/create",function(req, res) {
+router.get("/create", function(req, res) {
   db.getCart()
     .then(function(data){
         paypal.create(req, res, data.total)
@@ -159,3 +159,11 @@ router.get ("/profile", function(req, res) {
 router.get("/about", function(req, res) {
     res.render(__dirname + '/../views/about.hbs')
 })
+
+router.get('/users', (req, res) => {
+        db.getUsers()
+            .then((data) => {
+                res.json({data: data})
+            })
+})
+
