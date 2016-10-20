@@ -23,7 +23,7 @@ function create (req, res, total) {
     },
     "redirect_urls": {
       "return_url": "http://localhost:3000/execute",
-      "cancel_url": "http://localhost:3000//cancel"
+      "cancel_url": "http://localhost:3000/cancel"
     },
     "transactions": [{
       "amount": {

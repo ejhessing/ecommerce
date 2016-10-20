@@ -2,5 +2,10 @@ Authentication
   Login
   Purchase History for user
   Update details for User
+  
+  cart
+   Create cookies to hold cart information so more than one user can use the site at the same time
+   
+   
 
 Make them APIs and rebuild front end for React - Redux
