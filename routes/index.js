@@ -50,7 +50,6 @@ router.get("/create", (req, res) => {
         paypal.create(req, res, data.total)
       })
   }
-    
 })
 
 router.get("/execute", (req, res) => {
@@ -93,5 +92,10 @@ router.get('/users', (req, res) => {
     .then((data) => {
         res.json({ data: data })
     })
+})
+
+router.get('/logout', (req, res) => {
+  req.session.destroy()
+  res.redirect('/')
 })
 
