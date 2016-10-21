@@ -45,8 +45,11 @@ router.post("/remove", (req, res) => {
 
 router.post("/coupon", (req, res) => {
   let coupon = req.body.coupon
-  cart.discountCart
-    .then((data) => {
-      res.render(__dirname + '/../views/checkout.hbs', {data: data})
+  cart.discountCart(coupon)
+    .then((code) => {
+      cart.getCart(code[0].discount)
+        .then((data) => {
+          res.render(__dirname + '/../views/checkout.hbs', {data: data})          
+        })
     })
 })

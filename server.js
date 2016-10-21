@@ -8,7 +8,7 @@ const passport = require('passport')
 const flash = require('connect-flash')
 
 const index = require('./routes/index')
-const cart = require('./routes/cart')
+const cart = require('./routes/cart_routes')
 const paypal = require("./routes/paypal")
 
 const PORT = process.env.PORT || 3000

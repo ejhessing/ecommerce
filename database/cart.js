@@ -9,17 +9,20 @@ module.exports = {
    checkIfInCart,
    addToCart,
    updateCart,
-   removeFromCart
+   removeFromCart,
+   discountCart
 }
 
 // Cart Logic
-function getCart () {
+function getCart (discount) {
   return knex('cart')
     .join('products', 'product_id', '=', 'products.id')
     .select()
     .then(function (data) {
       let data2 = (data).map(getTotal)
       data2.total = getCartTotal(data)
+      data2.discount = ((discount / 100) * data2.total).toFixed(0) || 0
+      data2.total -= data2.discount
       return data2
     })
     .catch(function (err) {
@@ -84,4 +87,10 @@ function removeFromCart (id) {
     .catch(function (err) {
       console.log(err)
     })
+}
+
+function discountCart(coupon) {
+   return knex('coupons')
+      .where('code', coupon)
+      .returning('discount')
 }

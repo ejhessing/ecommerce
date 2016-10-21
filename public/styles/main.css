@@ -100,7 +100,9 @@ label {
   margin-top:50px;
 }
 
-
+.red { 
+  color: red;
+}
 
 
 @media screen and (min-width: 680px) {
