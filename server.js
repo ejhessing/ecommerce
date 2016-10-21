@@ -8,6 +8,7 @@ const passport = require('passport')
 const flash = require('connect-flash')
 
 const index = require('./routes/index')
+const cart = require('./routes/cart')
 const paypal = require("./routes/paypal")
 
 const PORT = process.env.PORT || 3000
@@ -46,6 +47,7 @@ app.post('/checkout', passport.authenticate('signup', {
     failureFlash : true
 }))
 
+app.use("/", cart)
 app.use("/", index)
 
 
