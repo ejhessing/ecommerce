@@ -27,7 +27,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.set('trust proxy', 1)
 app.use(session({
-  secret: 'SESSION_KEY'
+  secret: 'SESSION_KEY',
+  resave: true,
+  saveUninitialized: true
 }))
 app.use(passport.initialize())
 app.use(passport.session())

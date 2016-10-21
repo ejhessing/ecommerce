@@ -104,6 +104,11 @@ label {
   color: red;
 }
 
+#red {
+  color: red;
+  width: 52%;
+}
+
 
 @media screen and (min-width: 680px) {
   #display li {

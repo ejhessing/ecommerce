@@ -11,7 +11,7 @@ module.exports = router
 router.get('/', (req,res) => {
   db.getProducts()
     .then((data) => {
-      res.render(__dirname + '/../views/index.hbs', {data: data})
+      res.render(__dirname + '/../views/index.hbs', { data: data })
     })
 })
 
@@ -20,30 +20,28 @@ router.get("/products/:id", (req, res) => {
   let id = req.params.id
   db.getProduct(id)
     .then((data) => {
-      res.render(__dirname + '/../views/products.hbs', {data: data[0]})
+      res.render(__dirname + '/../views/products.hbs', { data: data[0] })
     })
 })
 
 router.get("/checkout", (req, res) => {
-  cart.getCart()
-  .then((data) => {
-    res.render(__dirname + '/../views/checkout.hbs', {data: data})
-  })
+
+  cart.getCart(req.session.coupon)
+    .then((data) => {
+      res.render(__dirname + '/../views/checkout.hbs', { data: data })
+    })
 })
 
 router.get("/thanks", function(req, res) {
   db.afterPurchase()
   .then(function (data){
-    res.render(__dirname + '/../views/thanks.hbs', {data: data})
+    res.render(__dirname + '/../views/thanks.hbs', { data: data })
   })
 })
 
 
 router.get("/create", (req, res) => {
-  cart.getCart()
-    .then((data) => {
-        paypal.create(req, res, data.total)
-    })
+  paypal.create(req, res, req.session.total)
 })
 
 router.get("/execute", (req, res) => {
@@ -69,7 +67,7 @@ router.get ("/profile", (req, res) => {
   let id = req.session.passport.user
   db.getUserById(id)
     .then((user) => {
-      res.render(__dirname + '/../views/profile.hbs', {data: user})
+      res.render(__dirname + '/../views/profile.hbs', { data: user })
     })
     .catch((err) => {
       console.log(err)
@@ -84,7 +82,7 @@ router.get("/about", (req, res) => {
 router.get('/users', (req, res) => {
   db.getUsers()
     .then((data) => {
-        res.json({data: data})
+        res.json({ data: data })
     })
 })
 

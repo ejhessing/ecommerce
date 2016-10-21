@@ -6,17 +6,17 @@ const db               = require('../database/db')
 module.exports = function(passport) {
    
    passport.serializeUser(function(user, done) {
-     done(null, user.id)
+     return done(null, user.id)
    })
    
    passport.deserializeUser(function(id, done) {
-     const user = id[0] || id 
-     db.getUserById(user)
+     const user = id[0] | id 
+     db.findUserById(user)
        .then(function(users) {
-         done(null, users)
+         return done(null, users)
        })
        .catch(function(err) {
-         done(err)
+         return done(err)
        })
    })
    

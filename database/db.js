@@ -7,15 +7,15 @@ const cart = require("./cart")
 
 
 module.exports = {
-  createUser: createUser,
-  findByLogin: findByLogin,
-  getHistory: getHistory,
-  getProduct: getProduct,
-  getProducts: getProducts,
-  removeAllFromCart: removeAllFromCart,
-  getUserById: getUserById,
-  getUsers: getUsers,
-  moveCartToHistory, moveCartToHistory
+  createUser,
+  findByLogin,
+  getHistory,
+  getProduct,
+  getProducts,
+  findUserById,
+  getUserById,
+  getUsers,
+  moveCartToHistory
 }
 
 function createUser (email, password, name, address, city, country, postcode) {
@@ -80,14 +80,7 @@ function addToHistory (data) {
     })
 }
 
-function removeAllFromCart () {
-  return knex('cart')
-    .select()
-    .del()
-    .catch(function (err) {
-      console.log(err)
-    })
-}
+
 
 function findByLogin (email) {
   return knex('users')
@@ -143,3 +136,7 @@ function getUsers () {
    return knex('users')
 }
 
+function findUserById (id) {
+   return knex('users')
+    .where({ id: id });
+}

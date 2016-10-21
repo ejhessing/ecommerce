@@ -10,6 +10,7 @@ module.exports = {
    addToCart,
    updateCart,
    removeFromCart,
+   removeAllFromCart,
    discountCart
 }
 
@@ -21,7 +22,7 @@ function getCart (discount) {
     .then(function (data) {
       let data2 = (data).map(getTotal)
       data2.total = getCartTotal(data)
-      data2.discount = ((discount / 100) * data2.total).toFixed(0) || 0
+      data2.discount = ((discount / 100) * data2.total).toFixed(0) | 0
       data2.total -= data2.discount
       return data2
     })
@@ -93,4 +94,13 @@ function discountCart(coupon) {
    return knex('coupons')
       .where('code', coupon)
       .returning('discount')
+}
+
+function removeAllFromCart () {
+  return knex('cart')
+    .select()
+    .del()
+    .catch(function (err) {
+      console.log(err)
+    })
 }

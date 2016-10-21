@@ -44,11 +44,18 @@ router.post("/remove", (req, res) => {
 //add discount to cart
 
 router.post("/coupon", (req, res) => {
-  let coupon = req.body.coupon
+  let coupon = req.body.coupon.toLowerCase()
+  req.session.coupon = coupon
   cart.discountCart(coupon)
     .then((code) => {
-      cart.getCart(code[0].discount)
+      let discount = 0
+      if(code[0]) {
+        discount = code[0].discount
+      }
+      cart.getCart(discount)
         .then((data) => {
+          req.session.coupon = coupon
+          req.session.total = data.total
           res.render(__dirname + '/../views/checkout.hbs', {data: data})          
         })
     })
