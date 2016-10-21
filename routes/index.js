@@ -41,7 +41,16 @@ router.get("/thanks", function(req, res) {
 
 
 router.get("/create", (req, res) => {
-  paypal.create(req, res, req.session.total)
+  let total = req.session.total
+  if(total) { 
+    paypal.create(req, res, req.session.total)
+  } else {
+    cart.getCart()
+      .then((data) => {
+        paypal.create(req, res, data.total)
+      })
+  }
+    
 })
 
 router.get("/execute", (req, res) => {
