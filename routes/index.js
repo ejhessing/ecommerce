@@ -1,5 +1,7 @@
 "use strict"
 const db = require("../database/db")
+const cart = require("../database/cart")
+
 const express = require('express')
 const paypal = require("./paypal")
 const router = express.Router()
@@ -23,7 +25,7 @@ router.get("/products/:id", (req, res) => {
 })
 
 router.get("/checkout", (req, res) => {
-  db.getCart()
+  cart.getCart()
   .then((data) => {
     res.render(__dirname + '/../views/checkout.hbs', {data: data})
   })
@@ -38,7 +40,7 @@ router.get("/thanks", function(req, res) {
 
 
 router.get("/create", (req, res) => {
-  db.getCart()
+  cart.getCart()
     .then((data) => {
         paypal.create(req, res, data.total)
     })

@@ -1,12 +1,13 @@
 "use strict"
 const db = require("../database/db")
+const cart = require("../database/cart")
 const express = require('express')
 const router = express.Router()
 
 module.exports = router
 
 router.get("/cart", (req, res) => {
-  db.getCart()
+  cart.getCart()
     .then((data) => {
       res.render(__dirname + '/../views/cart.hbs', {data: data})
     })
@@ -19,7 +20,7 @@ router.post("/add", (req, res) => {
     id: req.body.id,
     quantity: req.body.quantity
   }
-  db.checkIfInCart(data)
+  cart.checkIfInCart(data)
     .then((data) => {
        res.redirect("/cart")
     })
@@ -31,11 +32,21 @@ router.post("/add", (req, res) => {
 //Remove from cart
 router.post("/remove", (req, res) => {
   let id = req.body.id
-  db.removeFromCart(id)
+  cart.removeFromCart(id)
     .then((data) => {
        res.redirect("/cart")
     })
     .catch((err) => {
       console.log(err)
+    })
+})
+
+//add discount to cart
+
+router.post("/coupon", (req, res) => {
+  let coupon = req.body.coupon
+  cart.discountCart
+    .then((data) => {
+      res.render(__dirname + '/../views/checkout.hbs', {data: data})
     })
 })

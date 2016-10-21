@@ -42,7 +42,6 @@ h4, h6 {
   float: left;
   width: 45%;
   margin: 2.5%;
-  width: 200px;
   height: 230px;
 
 }
@@ -96,6 +95,11 @@ label {
 .checkoutBtn {
   color:green;
 }
+
+#coupon {
+  margin-top:50px;
+}
+
 
 
 
