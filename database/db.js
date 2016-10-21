@@ -207,8 +207,7 @@ function findByLogin (email) {
 
 function moveCartToHistory () {
   getCart() //a promise was not returned
-    .then(function(data){
-      console.log(data)
+    .then(function(data) {
       for(var i = 0; i< data.length; i++){
         addToHistory(data[i])
       }
