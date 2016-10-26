@@ -42,7 +42,6 @@ h4, h6 {
   float: left;
   width: 45%;
   margin: 2.5%;
-  width: 200px;
   height: 230px;
 
 }
@@ -97,6 +96,18 @@ label {
   color:green;
 }
 
+#coupon {
+  margin-top:50px;
+}
+
+.red { 
+  color: red;
+}
+
+#red {
+  color: red;
+  width: 52%;
+}
 
 
 @media screen and (min-width: 680px) {

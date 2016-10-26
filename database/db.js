@@ -1,25 +1,21 @@
 "use strict"
 require('dotenv').config();
-var config = require('../knexfile.js')[ process.env.NODE_ENV || 'development' ]
-var knex = require('knex')(config)
+const config = require('../knexfile.js')[ process.env.NODE_ENV || 'development' ]
+const knex = require('knex')(config)
+const cart = require("./cart")
 
 
 
 module.exports = {
-  addToCart: addToCart,
-  checkIfInCart: checkIfInCart,
-  createUser: createUser,
-  getCart: getCart,
-  findByLogin: findByLogin,
-  getHistory: getHistory,
-  getProduct: getProduct,
-  getProducts: getProducts,
-  removeAllFromCart: removeAllFromCart,
-  removeFromCart: removeFromCart,
-  getUserById: getUserById,
-  updateCart: updateCart,
-  getUsers: getUsers,
-  moveCartToHistory, moveCartToHistory
+  createUser,
+  findByLogin,
+  getHistory,
+  getProduct,
+  getProducts,
+  findUserById,
+  getUserById,
+  getUsers,
+  moveCartToHistory
 }
 
 function createUser (email, password, name, address, city, country, postcode) {
@@ -54,87 +50,15 @@ function getProduct (id) {
 }
 
 
-// Cart Logic
-function getCart () {
-  return knex('cart')
-    .join('products', 'product_id', '=', 'products.id')
-    .select()
-    .then(function (data) {
-      let data2 = (data).map(getTotal)
-      data2.total = getCartTotal(data)
-      return data2
-    })
-    .catch(function (err) {
-      console.log(err)
-    })
-}
 
-//Get product total
-function getTotal (data) {
-  data.total = data.quantity * data.price
-  return data
-}
-
-//Gets the total of the cart
-function getCartTotal (data) {
-  let total = 0
-  for(var i = 0; i < data.length; i++) {
-    total += data[i].total
-  }
-  return total
-}
-
-function checkIfInCart (data) {
-  return knex('cart')
-    .where('product_id', data.id)
-    .count('product_id')
-    .then(function(count){
-      if(count[0].count == 1){
-        return updateCart(data)
-      } else {
-        return addToCart(data)
-      }
-    })
-    .catch(function(err){
-      console.log(err)
-    })
-}
-
-function addToCart(input) {
-  let userId = input.userId || null
-  let quantity = input.quantity || 1
-  return knex('cart')
-  .insert({product_id: input.id, user_id: userId, quantity: quantity})
-  .catch(function (err) {
-    console.log(err)
-  })
-}
-
-function updateCart (data) {
-  return knex('cart')
-    .where('product_id', data.id)
-    .increment('quantity', data.quantity)
-    .catch(function(err){
-      console.log(err)
-    })
-}
-
-function removeFromCart (id) {
-  return knex('cart')
-    .where('product_id', id)
-    .del()
-    .catch(function (err) {
-      console.log(err)
-    })
-}
 
 function getHistory () {
   return knex('history')
     .join('products', 'product_id', '=', 'products.id')
     .select()
     .then(function (data) {
-      let data2 = (data).map(getTotal)
-      data2.total = getCartTotal(data)
+      let data2 = (data).map(cart.getTotal)
+      data2.total = cart.getCartTotal(data)
       return data2
     })
     .catch(function (err) {
@@ -156,14 +80,7 @@ function addToHistory (data) {
     })
 }
 
-function removeAllFromCart () {
-  return knex('cart')
-    .select()
-    .del()
-    .catch(function (err) {
-      console.log(err)
-    })
-}
+
 
 function findByLogin (email) {
   return knex('users')
@@ -185,8 +102,8 @@ function getUserById (id) {
         .where('products.id', data[0].product_id)
         .where('user_id', data[0].user_id)
         .then(function (data) {
-            let data2 = (data).map(getTotal)
-            data2.total = getCartTotal(data)
+            let data2 = (data).map(cart.getTotal)
+            data2.total = cart.getCartTotal(data)
             return data2
         })
     })
@@ -206,7 +123,7 @@ function findByLogin (email) {
 }
 
 function moveCartToHistory () {
-  getCart() //a promise was not returned
+  cart.getCart() //a promise was not returned
     .then(function(data) {
       for(var i = 0; i< data.length; i++){
         addToHistory(data[i])
@@ -219,3 +136,7 @@ function getUsers () {
    return knex('users')
 }
 
+function findUserById (id) {
+   return knex('users')
+    .where({ id: id });
+}

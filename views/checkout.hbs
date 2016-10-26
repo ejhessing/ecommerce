@@ -17,6 +17,8 @@
       <hr>
     </header>
     <div class="container">
+
+      
       <!-- Register -->
       <div class="row">
       <div class="one-half column">
@@ -46,6 +48,8 @@
 
       <!-- Cart -->
         <div class="one-half column">
+          
+          
           <h2>Cart</h2>
             <table class="u-full-width">
               <thead>
@@ -65,6 +69,14 @@
                   <td>${{total}}.00</td>
                 </tr>
                 {{/each}}
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                  <td class="red">Discount</td>
+                  <td></td>
+                  <td></td>
+                  <td class="red">(${{data.discount}}.00)</td>
+                </tr>
                 <tr>
                   <td><strong>Total</strong></td>
                   <td></td>
@@ -74,6 +86,14 @@
               </tbody>
             </table>
             <a href="/cart" ><button class="u-full-width" name="cart">Back to cart</button></a>
+
+            <div id="coupon">
+              <form class="coupon" action="coupon" method="post">
+                <label for="discount"><h3>Coupon Code: </h3></label>
+                <input type="text" class="u-half-width" name="coupon">
+                <input class="u-half-width button" id="red" type="submit" name="discount" value="Claim discount">
+              </form>
+            </div>
         </div>
       </div>
   </body>

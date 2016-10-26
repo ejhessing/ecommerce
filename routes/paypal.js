@@ -1,5 +1,6 @@
 "use strict"
 const paypal = require('paypal-rest-sdk')
+const cart = require("../database/cart")
 const db = require("../database/db")
 let payID = ''
 
@@ -63,10 +64,10 @@ function execute (req, res){
     if (error) {
       console.log(error)
     } else {
-        db.getCart()
+        cart.getCart()
           .then(function(data){
             db.moveCartToHistory()
-            db.removeAllFromCart()
+            cart.removeAllFromCart()
            res.render(__dirname + '/../views/thanks.hbs', {payment: payment, data: data})
          })
       }

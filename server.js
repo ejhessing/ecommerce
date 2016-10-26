@@ -8,7 +8,7 @@ const passport = require('passport')
 const flash = require('connect-flash')
 
 const index = require('./routes/index')
-const cart = require('./routes/cart')
+const cart = require('./routes/cart_routes')
 const paypal = require("./routes/paypal")
 
 const PORT = process.env.PORT || 3000
@@ -27,7 +27,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.set('trust proxy', 1)
 app.use(session({
-  secret: 'SESSION_KEY'
+  secret: 'SESSION_KEY',
+  resave: true,
+  saveUninitialized: true
 }))
 app.use(passport.initialize())
 app.use(passport.session())

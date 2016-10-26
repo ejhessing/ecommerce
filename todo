@@ -1,11 +1,8 @@
 Authentication
-  Login
-  Purchase History for user
   Update details for User
+  Forgot password
   
-  cart
-   Create cookies to hold cart information so more than one user can use the site at the same time
+ Cart
+   Create a random session id - Put that as a cart column, have user as null 
+   when user purchases, delete those items from cart and move them to history 
    
-   
-
-Make them APIs and rebuild front end for React - Redux
