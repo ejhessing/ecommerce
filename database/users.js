@@ -5,7 +5,8 @@ const knex = require('knex')(config)
 const bcrypt   = require('bcrypt-nodejs')
 
 module.exports = {
-  updateUser
+  updateUser,
+  changePassword
 }
 
 function updateUser (id, address, city, country, postcode) {
@@ -21,9 +22,11 @@ return knex ('users')
 
 function changePassword (id, password, newPassword) {
   const newHash = generateHash(newPassword)
-  return ('users')
+  console.log(id)
+  return knex ('users')
     .where({ 'id' : id })
     .then((user) => {
+      console.log(user)
       if(!validPassword(password, user[0].password)) {
         console.log("Sorry incorrect password")
         return
