@@ -8,8 +8,9 @@ module.exports = {
   updateUser
 }
 
-function updateUser (address, city, country, postcode) {
+function updateUser (id, address, city, country, postcode) {
 return knex ('users')
+  .where({ 'id' : id })
   .update({
      address: address,
      city: city,
@@ -18,3 +19,29 @@ return knex ('users')
   })
 }
 
+function changePassword (id, password, newPassword) {
+  const newHash = generateHash(newPassword)
+  return ('users')
+    .where({ 'id' : id })
+    .then((user) => {
+      if(!validPassword(password, user[0].password)) {
+        console.log("Sorry incorrect password")
+        return
+      } else {
+        return knex('users')
+          .where({ 'id' : id })
+          .update({
+            password: newHash
+          })
+      }
+    })
+}
+
+
+function generateHash(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+}
+
+function validPassword(password, hash) {
+    return bcrypt.compareSync(password, hash)
+}
