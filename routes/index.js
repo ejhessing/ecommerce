@@ -74,8 +74,12 @@ router.get("/login", (req, res) => {
 router.get ("/profile", (req, res) => {
   let id = req.session.passport.user
   db.getUserById(id)
-    .then((user) => {
-      res.render(__dirname + '/../views/profile.hbs', { data: user })
+    .then((history) => {
+      db.findUserById(history[0].user_id)
+        .then((profile) => {
+          res.render(__dirname + '/../views/profile.hbs', { data: history, user: profile })
+        })
+
     })
     .catch((err) => {
       console.log(err)

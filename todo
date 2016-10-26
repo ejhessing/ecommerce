@@ -1,8 +1,15 @@
 Authentication
   Update details for User
-  Forgot password
+  Forgot password/ Change Password
   
  Cart
    Create a random session id - Put that as a cart column, have user as null 
    when user purchases, delete those items from cart and move them to history 
+History 
+   Should take into account the discount price based on coupon 
+   Display the discount on profile page 
+
    
+View
+   Add partials to the header
+   Add logout button
