@@ -84,12 +84,12 @@ function addToHistory (data) {
 
 function findByLogin (email) {
   return knex('users')
-    .select()
     .where('email', email)
     .catch(function (err) {
       console.log(err)
     })
 }
+
 
 function getUserById (id) {
   return knex('users')
@@ -113,14 +113,7 @@ function getUserById (id) {
 
 }
 
-function findByLogin (email) {
-  return knex('users')
-    .where('users.email', email)
-    .select()
-    .catch(function (err) {
-      console.log(err)
-    })
-}
+
 
 function moveCartToHistory () {
   cart.getCart() //a promise was not returned
