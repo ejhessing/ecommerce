@@ -39,3 +39,21 @@ router.post("/changePassword", (req, res) => {
          })
    }
 })
+
+
+ router.get("/resetPassword/:token", (req, res) => {
+    res.render('reset_password')
+   // const token = req.params.token
+   // res.render('reset_password', { token: token } )
+ })
+ 
+router.post("/resetPassword", (req, res) => {
+   const token = req.body.token;
+   const password = req.body.password;
+   const email = req.body.email;
+   db.resetPassword(email, password, token)
+     .then((id) => {
+       //sendEmail.passwordChanged(email);
+       res.redirect('/');
+     });
+});
