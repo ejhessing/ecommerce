@@ -21,17 +21,16 @@
         <div class="one-half column">
           <br>
           <br>
-           <h3>Change Your Password:</h3>
+           <h3>Forgot your password?</h3>
 
-            <p>Please enter your email and new password for your account</p>
+            <p>Please enter your email address and an email will be sent with instructions on how to reset your password</p>
             <form class="profile" action="resetPassword" method="post">
 
               <input type="hidden" name="token" value="{{token}}">
               <label for="email">Email: </label>
               <input type="text" class="u-full-width" name="email">
-              <label for="password">New password: </label>
-              <input type="password" class="u-full-width" name="password">            
-              <input class="u-full-width button-primary" type="submit" name="submit" value="Reset Password">
+      
+              <input class="u-full-width button-primary" type="submit" name="submit" value="Send Email">
             </form>
 
         </div>

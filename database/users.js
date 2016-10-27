@@ -6,7 +6,8 @@ const bcrypt   = require('bcrypt-nodejs')
 
 module.exports = {
   updateUser,
-  changePassword
+  changePassword,
+  resetPassword
 }
 
 function updateUser (id, address, city, country, postcode) {
@@ -40,6 +41,10 @@ function changePassword (id, password, newPassword) {
     })
 }
 
+
+function resetPassword (email, password, token) {
+  
+}
 
 function generateHash(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
