@@ -40,6 +40,15 @@ router.post("/changePassword", (req, res) => {
    }
 })
 
+router.get("/forgot", (req, res) => {
+  res.render('forgot_password')
+})
+
+router.post("/forgot", (req, res) => {
+  const email = req.body.email
+  console.log("We got your email address " + email)
+  res.redirect('/')
+})
 
 router.get("/resetPassword/:token", (req, res) => {
   const token = req.params.token
