@@ -3,11 +3,23 @@ require('dotenv').config();
 const config = require('../knexfile.js')[ process.env.NODE_ENV || 'development' ]
 const knex = require('knex')(config)
 const bcrypt   = require('bcrypt-nodejs')
+const crypto = require('crypto')
 
 module.exports = {
   updateUser,
   changePassword,
-  resetPassword
+  findByLogin,
+  resetPassword,
+  createToken,
+  getResetDB
+}
+
+function findByLogin (email) {
+  return knex('users')
+    .where('email', email)
+    .catch(function (err) {
+      console.log(err)
+    })
 }
 
 function updateUser (id, address, city, country, postcode) {
@@ -41,6 +53,29 @@ function changePassword (id, password, newPassword) {
     })
 }
 
+function createToken (email) {
+  const token = generateHash(email)
+  const oneHour = 3600000;
+  const expiredAt = Date.now() + oneHour;
+  findByLogin(email)
+    .then((user) => {
+      if(!user) {
+          console.log('error', "No user with that email address exists")
+          return ('error')
+      } 
+      console.log(user)
+      return knex('reset')
+          .insert({
+            user_id: user[0].id,
+            token: token,
+            expiredAt: expiredAt
+          })
+    })
+}
+
+function getResetDB () {
+  return knex('reset')
+}
 
 function resetPassword (email, password, token) {
   
@@ -53,3 +88,4 @@ function generateHash(password) {
 function validPassword(password, hash) {
     return bcrypt.compareSync(password, hash)
 }
+

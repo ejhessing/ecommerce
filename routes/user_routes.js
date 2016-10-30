@@ -46,6 +46,8 @@ router.get("/forgot", (req, res) => {
 
 router.post("/forgot", (req, res) => {
   const email = req.body.email
+  users.createToken(email)
+  //Send email
   console.log("We got your email address " + email)
   res.redirect('/')
 })
@@ -54,7 +56,8 @@ router.get("/resetPassword/:token", (req, res) => {
   const token = req.params.token
   res.render('reset_password', { token: token } )
 })
- 
+
+
 router.post("/resetPassword", (req, res) => {
   const token = req.body.token;
   const password = req.body.password;
@@ -62,6 +65,13 @@ router.post("/resetPassword", (req, res) => {
   users.resetPassword(email, password, token)
     .then((id) => {
       //sendEmail.passwordChanged(email);
-      res.redirect('/');
+      res.redirect('/')
  });
 });
+
+router.get('/reset', (req, res) => {
+  users.getResetDB()
+    .then((data) => {
+      res.json({data: data})
+    })
+})
