@@ -1,6 +1,4 @@
-Authentication
-  Forgot password/ Change Password
-  
+
  Cart
    Create a random session id - Put that as a cart column, have user as null 
    when user purchases, delete those items from cart and move them to history 
@@ -12,3 +10,9 @@ History
 View
    Add partials to the header
    Add logout button
+   
+Emails
+   Send email for change of password within profile
+   Send email for password recovery at /forgot
+   Send email for password change at /resetPassword
+   Send email when something purchased with what they have purchased
