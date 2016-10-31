@@ -3,7 +3,6 @@ require('dotenv').config();
 const config = require('../knexfile.js')[ process.env.NODE_ENV || 'development' ]
 const knex = require('knex')(config)
 const bcrypt   = require('bcrypt-nodejs')
-const crypto = require('crypto')
 
 module.exports = {
   updateUser,
@@ -35,11 +34,9 @@ return knex ('users')
 
 function changePassword (id, password, newPassword) {
   const newHash = generateHash(newPassword)
-  console.log(id)
   return knex ('users')
     .where({ 'id' : id })
     .then((user) => {
-      console.log(user)
       if(!validPassword(password, user[0].password)) {
         console.log("Sorry incorrect password")
         return
@@ -53,8 +50,7 @@ function changePassword (id, password, newPassword) {
     })
 }
 
-function createToken (email) {
-  const token = generateHash(email)
+function createToken (email, token) {
   const oneHour = 3600000;
   const expiredAt = Date.now() + oneHour;
   findByLogin(email)
@@ -63,7 +59,6 @@ function createToken (email) {
           console.log('error', "No user with that email address exists")
           return ('error')
       } 
-      console.log(user)
       return knex('reset')
           .insert({
             user_id: user[0].id,
@@ -78,7 +73,21 @@ function getResetDB () {
 }
 
 function resetPassword (email, password, token) {
-  
+  const currentTime = Date.now()
+  const hash = generateHash(password)
+  return knex('reset')
+    .where({ token: token })
+    .then(data => {
+      if(data.expiredAt > currentTime){
+        console.log("Sorry this link has expired, please create a new one")
+      } else {
+        return knex('users')
+          .where({email: email})
+          .update({password: hash})
+
+      }
+
+    })
 }
 
 function generateHash(password) {
