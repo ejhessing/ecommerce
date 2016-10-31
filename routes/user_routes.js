@@ -2,6 +2,7 @@ const db = require("../database/db")
 const users = require("../database/users")
 const express = require('express')
 const router = express.Router()
+const crypto = require('crypto')
 
 module.exports = router
 
@@ -38,4 +39,45 @@ router.post("/changePassword", (req, res) => {
             res.redirect('/login')
          })
    }
+})
+
+router.get("/forgot", (req, res) => {
+  res.render('forgot_password')
+})
+
+router.post("/forgot", (req, res) => {
+  const email = req.body.email
+  const token = crypto.randomBytes(20).toString('hex')
+  users.createToken(email, token)
+  //Send email
+  console.log("We got your email address " + email)
+  res.redirect('/')
+})
+
+router.post("/resetPassword", (req, res) => {
+  const token = req.body.token;
+  const password = req.body.password;
+  const email = req.body.email;
+  users.resetPassword(email, password, token)
+    .then((data) => {
+      console.log("Password changed")
+      //sendEmail.passwordChanged(email);
+      res.redirect('/login')
+    });
+});
+
+router.get("/resetPassword/:token", (req, res) => {
+  const token = req.params.token
+  console.log(token)
+  res.render('reset_password', { token: token } )
+})
+
+
+
+
+router.get('/reset', (req, res) => {
+  users.getResetDB()
+    .then((data) => {
+      res.json({data: data})
+    })
 })
