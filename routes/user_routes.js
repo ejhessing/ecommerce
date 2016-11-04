@@ -3,6 +3,7 @@ const users = require("../database/users")
 const express = require('express')
 const router = express.Router()
 const crypto = require('crypto')
+const sendEmail = require('../emails/mail_config')
 
 module.exports = router
 
@@ -49,7 +50,7 @@ router.post("/forgot", (req, res) => {
   const email = req.body.email
   const token = crypto.randomBytes(20).toString('hex')
   users.createToken(email, token)
-  //Send email
+  sendEmail.resetLink(req.headers.host, email, token)
   console.log("We got your email address " + email)
   res.redirect('/')
 })
@@ -61,7 +62,7 @@ router.post("/resetPassword", (req, res) => {
   users.resetPassword(email, password, token)
     .then((data) => {
       console.log("Password changed")
-      //sendEmail.passwordChanged(email);
+      sendEmail.passwordChanged(email);
       res.redirect('/login')
     });
 });
