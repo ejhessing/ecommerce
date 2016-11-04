@@ -4,7 +4,8 @@ require('dotenv').config()
 
 
 module.exports = {
-   resetLink
+   resetLink,
+   passwordChanged
 }
 
 function resetLink (host, emailAddress, token) {
@@ -35,3 +36,27 @@ function resetLink (host, emailAddress, token) {
    })
 }
 
+function passwordChanged (emailAddress) {
+   const options = {
+      auth: {
+        api_key: process.env.SGApi
+      }
+   }
+          
+   const mailer = nodemailer.createTransport(sgTransport(options))
+       
+   const email = {
+     to: emailAddress,
+     from: process.env.host_email,
+     subject: 'Node.js Password Reset',
+     text: 'Hello,\n\n' +
+          'This is a confirmation that the password for your account ' + emailAddress + ' has just been changed.\n'
+   }
+     
+   mailer.sendMail(email, (err, res) => {
+      if (err) { 
+        console.log(err)
+      }
+      console.log(res)
+   })
+}
