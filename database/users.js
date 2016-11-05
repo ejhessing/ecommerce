@@ -3,6 +3,7 @@ require('dotenv').config();
 const config = require('../knexfile.js')[ process.env.NODE_ENV || 'development' ]
 const knex = require('knex')(config)
 const bcrypt   = require('bcrypt-nodejs')
+const sendEmail = require('../emails/mail_config')
 
 module.exports = {
   updateUser,
@@ -35,6 +36,14 @@ return knex ('users')
      city: city,
      country: country,
      postcode: postcode
+  })
+  .then(() => {
+    return knex('users')
+      .where({ 'id' : id})
+      .then(data=> {
+        sendEmail.updateDetails(data[0].email)
+      })
+
   })
 }
 

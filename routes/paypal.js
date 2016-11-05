@@ -2,7 +2,7 @@
 const paypal = require('paypal-rest-sdk')
 const cart = require("../database/cart")
 const db = require("../database/db")
-  const sendEmail = require('../emails/mail_config')
+const sendEmail = require('../emails/mail_config')
 let payID = ''
 
 module.exports = {

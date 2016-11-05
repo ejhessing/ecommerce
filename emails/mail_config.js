@@ -6,7 +6,8 @@ require('dotenv').config()
 module.exports = {
    resetLink,
    passwordChanged, 
-   purchase
+   purchase,
+   updateDetails
 }
 
 function key () { 
@@ -17,7 +18,9 @@ function key () {
    }
 }
 
-function sendMail (mailer, email) {
+function sendMail (email) {
+  const mailer = nodemailer.createTransport(sgTransport(key()))
+
   mailer.sendMail(email, (err, res) => {
     if (err) { 
       console.log(err)
@@ -29,45 +32,40 @@ function sendMail (mailer, email) {
 
 function resetLink (host, emailAddress, token) {
 
-   const mailer = nodemailer.createTransport(sgTransport(key()))
-       
    const email = {
      to: emailAddress,
      from: process.env.HOST_EMAIL,
-     subject: 'Node.js Password Reset',
+     subject: 'Password Reset',
      text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
       'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
       'http://' + host + '/resetPassword/' + token + '\n\n' +
       'If you did not request this, please ignore this email and your password will remain unchanged.\n'
    }
      
-  sendMail(mailer, email)
+  sendMail(email)
 }
 
 function passwordChanged (emailAddress) {
 
-   const mailer = nodemailer.createTransport(sgTransport(key()))
-       
    const email = {
      to: emailAddress,
      from: process.env.HOST_EMAIL,
-     subject: 'Node.js Password Reset',
+     subject: 'Password Changed',
      text: 'Hello,\n\n' +
           'This is a confirmation that the password for your account ' + emailAddress + ' has just been changed.\n'
    }
    
-  sendMail(mailer, email)
+  sendMail(email)
 
 }
 
 function purchase (host, emailAddress) {
 
-   const mailer = nodemailer.createTransport(sgTransport(key()))
        
    const email = {
      to: emailAddress,
      from: process.env.HOST_EMAIL,
-     subject: 'Node.js Password Reset',
+     subject: 'Purchase from ' + process.env.NAME,
      text: 'Hello from ' + process.env.NAME + '\n\n' +
           'Thank you for your order, your goods will be shipped shortly! \n' +
           '\n\n' +
@@ -75,7 +73,19 @@ function purchase (host, emailAddress) {
           'http://' + host + '/login' + '\n\n' 
    }
    
-  sendMail(mailer, email)
+  sendMail(email)
 
 }
 
+function updateDetails (emailAddress) {
+   const email = {
+     to: emailAddress,
+     from: process.env.HOST_EMAIL,
+     subject: 'Details updated',
+     text: 'Hello from ' + process.env.NAME + '\n\n' +
+           'This is a confirmation that the details for your account ' + emailAddress + ' has just been changed.\n'
+   }
+   
+  sendMail(email)
+
+}
