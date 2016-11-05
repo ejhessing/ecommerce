@@ -3,6 +3,7 @@ const users = require("../database/users")
 const express = require('express')
 const router = express.Router()
 const crypto = require('crypto')
+const sendEmail = require('../emails/mail_config')
 
 module.exports = router
 
@@ -36,7 +37,11 @@ router.post("/changePassword", (req, res) => {
    } else {
       users.changePassword(id, password, passwordNew1)
          .then(() => {
-            res.redirect('/login')
+            users.findById(id)
+              .then(data => {
+                sendEmail.passwordChanged(data[0].email)
+                res.redirect('/login')
+              })
          })
    }
 })
@@ -49,8 +54,7 @@ router.post("/forgot", (req, res) => {
   const email = req.body.email
   const token = crypto.randomBytes(20).toString('hex')
   users.createToken(email, token)
-  //Send email
-  console.log("We got your email address " + email)
+  sendEmail.resetLink(req.headers.host, email, token)
   res.redirect('/')
 })
 
@@ -61,7 +65,7 @@ router.post("/resetPassword", (req, res) => {
   users.resetPassword(email, password, token)
     .then((data) => {
       console.log("Password changed")
-      //sendEmail.passwordChanged(email);
+      sendEmail.passwordChanged(email)
       res.redirect('/login')
     });
 });
@@ -71,9 +75,6 @@ router.get("/resetPassword/:token", (req, res) => {
   console.log(token)
   res.render('reset_password', { token: token } )
 })
-
-
-
 
 router.get('/reset', (req, res) => {
   users.getResetDB()

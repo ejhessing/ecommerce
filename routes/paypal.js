@@ -2,6 +2,7 @@
 const paypal = require('paypal-rest-sdk')
 const cart = require("../database/cart")
 const db = require("../database/db")
+const sendEmail = require('../emails/mail_config')
 let payID = ''
 
 module.exports = {
@@ -66,6 +67,7 @@ function execute (req, res){
     } else {
         cart.getCart()
           .then(function(data){
+            sendEmail.purchase(req.headers.host, req.session.email)
             db.moveCartToHistory()
             cart.removeAllFromCart()
            res.render(__dirname + '/../views/thanks.hbs', {payment: payment, data: data})

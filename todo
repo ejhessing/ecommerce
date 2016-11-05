@@ -1,9 +1,9 @@
-Authentication
-  Forgot password/ Change Password
-  
+User
+   Should be able to make purchases after logged in and that does not need to go through the same checkout profile
+ 
+ 
  Cart
-   Create a random session id - Put that as a cart column, have user as null 
-   when user purchases, delete those items from cart and move them to history 
+   Create a random session id - Put that as a cart column, create the same random session with a null user, when a userid is formed then it matches
 History 
    Should take into account the discount price based on coupon 
    Display the discount on profile page 
@@ -12,3 +12,10 @@ History
 View
    Add partials to the header
    Add logout button
+   
+Emails
+   Send email when something purchased with what they have purchased + your username for future purchases
+   
+Security
+   OWASP top 10 prevention methods
+   
