@@ -14,10 +14,8 @@ View
    Add logout button
    
 Emails
-   Send email for change of password/address within profile
-   Send email for password recovery at /forgot
-   Send email for password change at /resetPassword
    Send email when something purchased with what they have purchased + your username for future purchases
    
 Security
    OWASP top 10 prevention methods
+   
