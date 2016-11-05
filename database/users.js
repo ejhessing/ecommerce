@@ -10,13 +10,19 @@ module.exports = {
   findByLogin,
   resetPassword,
   createToken,
-  getResetDB
+  getResetDB,
+  findById
+}
+
+function findById (id) {
+  return knex('users')
+    .where({ id: id })
 }
 
 function findByLogin (email) {
   return knex('users')
     .where('email', email)
-    .catch(function (err) {
+    .catch((err) => {
       console.log(err)
     })
 }

@@ -37,7 +37,11 @@ router.post("/changePassword", (req, res) => {
    } else {
       users.changePassword(id, password, passwordNew1)
          .then(() => {
-            res.redirect('/login')
+            users.findById(id)
+              .then(data => {
+                sendEmail.passwordChanged(data[0].email)
+                res.redirect('/login')
+              })
          })
    }
 })
@@ -62,7 +66,7 @@ router.post("/resetPassword", (req, res) => {
   users.resetPassword(email, password, token)
     .then((data) => {
       console.log("Password changed")
-      sendEmail.passwordChanged(email);
+      sendEmail.passwordChanged(email)
       res.redirect('/login')
     });
 });
