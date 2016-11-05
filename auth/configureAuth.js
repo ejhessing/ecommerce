@@ -1,5 +1,5 @@
 const db = require('../database/db')
-const bcrypt   = require('bcrypt-nodejs');
+const bcrypt   = require('bcrypt-nodejs')
 
 module.exports = {
   loginStrategy: loginStrategy,
@@ -38,6 +38,7 @@ function registerStrategy (req, username, password, done) {
           const country = req.body.country
           const postcode = req.body.postcode
           const hash = generateHash(password)
+          req.session.email = username
           db.createUser(username, hash, name, address, city, country, postcode)
             .then(function (users) {
               done(null, {id : users})

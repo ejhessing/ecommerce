@@ -5,8 +5,27 @@ require('dotenv').config()
 
 module.exports = {
    resetLink,
-   passwordChanged
+   passwordChanged, 
+   purchase
 }
+
+function key () { 
+   return {
+      auth: {
+        api_key: process.env.SGApi
+      }
+   }
+}
+
+function sendMail (mailer, email) {
+  mailer.sendMail(email, (err, res) => {
+    if (err) { 
+      console.log(err)
+    }
+    console.log(res)
+  })
+}
+
 
 function resetLink (host, emailAddress, token) {
 
@@ -41,19 +60,22 @@ function passwordChanged (emailAddress) {
 
 }
 
-function key () { 
-   return {
-      auth: {
-        api_key: process.env.SGApi
-      }
+function purchase (host, emailAddress) {
+
+   const mailer = nodemailer.createTransport(sgTransport(key()))
+       
+   const email = {
+     to: emailAddress,
+     from: process.env.HOST_EMAIL,
+     subject: 'Node.js Password Reset',
+     text: 'Hello from ' + process.env.NAME + '\n\n' +
+          'Thank you for your order, your goods will be shipped shortly! \n' +
+          '\n\n' +
+          'To see what you have ordered or change shipping details log into ' +
+          'http://' + host + '/login' + '\n\n' 
    }
+   
+  sendMail(mailer, email)
+
 }
 
-function sendMail (mailer, email) {
-  mailer.sendMail(email, (err, res) => {
-    if (err) { 
-      console.log(err)
-    }
-    console.log(res)
-  })
-}

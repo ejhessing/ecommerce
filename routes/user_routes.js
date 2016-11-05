@@ -55,7 +55,6 @@ router.post("/forgot", (req, res) => {
   const token = crypto.randomBytes(20).toString('hex')
   users.createToken(email, token)
   sendEmail.resetLink(req.headers.host, email, token)
-  console.log("We got your email address " + email)
   res.redirect('/')
 })
 
@@ -76,9 +75,6 @@ router.get("/resetPassword/:token", (req, res) => {
   console.log(token)
   res.render('reset_password', { token: token } )
 })
-
-
-
 
 router.get('/reset', (req, res) => {
   users.getResetDB()
