@@ -25,8 +25,8 @@ function create (req, res, total) {
       "payment_method": "paypal"
     },
     "redirect_urls": {
-      "return_url": "https://udemy-cloned-cloned-ejhessing.c9users.io/execute",
-      "cancel_url": "/cancel"
+      "return_url": "https://ej-ecommerce.herokuapp.com/execute",
+      "cancel_url": "https://ej-ecommerce.herokuapp.com/cancel"
     },
     "transactions": [{
       "amount": {
